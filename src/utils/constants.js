@@ -1,5 +1,5 @@
 export const ROUTES = {
-  B_EMAILS: "/bmails",
+  B_EMAILS: "/bemails",
   BOOKMARKS: "/bookmarks",
 };
 

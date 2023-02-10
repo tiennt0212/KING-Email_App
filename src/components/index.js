@@ -4,4 +4,4 @@ import origin from "./origin";
 import Header from "./Header";
 
 const { Button, Input } = origin;
-export { Header, Input };
+export { Header, Input, Button };
