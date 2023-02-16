@@ -1,4 +1,4 @@
 import Button from "./Button";
-import Input from "./Input";
+import * as Input from "./Input";
 
-export default { Button, Input };
+export { Button, Input };
