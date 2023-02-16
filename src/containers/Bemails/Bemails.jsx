@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "components";
+import { Button, Avatar } from "components";
 import { useDispatch, useSelector } from "hooks";
 const Bemails = () => {
   const { count } = useSelector(({ count }) => ({ count }));
@@ -26,6 +26,11 @@ const Bemails = () => {
       >
         Async Incre
       </Button>
+      <Avatar
+        src={
+          "htt://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*"
+        }
+      />
     </>
   );
 };
