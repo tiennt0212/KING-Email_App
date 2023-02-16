@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Avatar } from "components";
+import { Button, Avatar, Header } from "components";
 import { useDispatch, useSelector } from "hooks";
 import mail from "assets/images/mail.png";
 const Bemails = () => {
@@ -10,6 +10,7 @@ const Bemails = () => {
   }));
   return (
     <>
+      <Header />
       <h1> This is Bemails container</h1>
       <h2> This is Bemails container</h2>
       <h3> This is Bemails container</h3>
