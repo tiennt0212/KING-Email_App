@@ -18,7 +18,7 @@ const Avatar = ({ src, alt, size, className, ...rest }) => (
   <AvatarStyled
     src={src}
     alt={alt}
-    className={`${className} ${size}-size`}
+    className={[className, `${size}-size`].join(" ")}
     {...rest}
     onError={({ currentTarget }) => {
       currentTarget.onerror = null;
