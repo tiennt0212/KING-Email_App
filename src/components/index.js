@@ -4,5 +4,6 @@ import { Button, Input } from "./origin";
 import Avatar from "./Avatar";
 
 import Header from "./Header";
+import Sidebar from "./Sidebar";
 
-export { Header, Input, Button, Avatar };
+export { Header, Input, Button, Avatar, Sidebar };
