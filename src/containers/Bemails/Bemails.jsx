@@ -1,7 +1,10 @@
 import React from "react";
-import { Button, Avatar, Header } from "components";
+import styled from "styled-components";
+import { Button, Avatar } from "components";
 import { useDispatch, useSelector } from "hooks";
 import mail from "assets/images/mail.png";
+
+const BemailStyled = styled.div``;
 const Bemails = () => {
   const { count } = useSelector(({ count }) => ({ count }));
   const { increment, incrementAsync } = useDispatch(({ count }) => ({
@@ -9,8 +12,7 @@ const Bemails = () => {
     incrementAsync: count.incrementAsync,
   }));
   return (
-    <>
-      <Header />
+    <div>
       <h1> This is Bemails container</h1>
       <h2> This is Bemails container</h2>
       <h3> This is Bemails container</h3>
@@ -50,7 +52,7 @@ const Bemails = () => {
           "htt://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*"
         }
       />
-    </>
+    </div>
   );
 };
 

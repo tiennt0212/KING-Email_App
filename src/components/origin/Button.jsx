@@ -7,6 +7,7 @@ const { tealGreen, lightGray } = colors;
 const ButtonStyled = styled.button`
   display: inline-flex;
   border-radius: 0.6rem;
+  align-items: center;
   &:hover {
     cursor: pointer;
   }
@@ -22,7 +23,7 @@ const ButtonStyled = styled.button`
   }
 
   &.small-size {
-    padding: 0.6rem 1.2rem;
+    padding: 0.6rem 0.6rem;
     font-size: 1.4rem;
     line-height: 1.4rem;
     &::before {
@@ -32,7 +33,7 @@ const ButtonStyled = styled.button`
     }
   }
   &.normal-size {
-    padding: 0.8rem 1.6rem;
+    padding: 0.8rem 0.8rem;
     line-height: 1.8rem;
     font-size: 1.8rem;
     &::before {
@@ -42,7 +43,7 @@ const ButtonStyled = styled.button`
     }
   }
   &.large-size {
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     font-size: 2.4rem;
     line-height: 2.4rem;
     &::before {
@@ -76,8 +77,8 @@ const Button = ({ size, icon, text, type, htmlType, className, ...rest }) => {
     <ButtonStyled
       type={htmlType}
       className={[className, `${type}-type`, `${size}-size`].join(" ")}
-      {...rest}
       icon={icon}
+      {...rest}
     >
       {text}
     </ButtonStyled>
