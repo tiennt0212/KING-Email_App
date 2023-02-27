@@ -5,7 +5,7 @@ import colors from "styles/colors";
 
 const { tealGreen, lightGray } = colors;
 const ButtonStyled = styled.button`
-  display: inline-flex;
+  /* display: inline-flex; */
   border-radius: 0.6rem;
   align-items: center;
   &:hover {
@@ -14,42 +14,43 @@ const ButtonStyled = styled.button`
   &:disabled {
     cursor: unset;
   }
-  &::before {
-    content: "";
-    background-image: url(${(props) => props.icon});
-    background-repeat: no-repeat;
-    background-size: contain;
-    display: block;
+  * {
+    vertical-align: middle;
   }
-
   &.small-size {
     padding: 0.6rem 0.6rem;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     line-height: 1.4rem;
-    &::before {
+    img {
       width: 1.4rem;
       height: 1.4rem;
-      margin-right: 0.6rem;
+      + span {
+        margin-left: 0.6rem;
+      }
     }
   }
   &.normal-size {
     padding: 0.8rem 0.8rem;
     line-height: 1.8rem;
     font-size: 1.8rem;
-    &::before {
+    img {
       width: 1.8rem;
       height: 1.8rem;
-      margin-right: 0.8rem;
+      + span {
+        margin-left: 0.8rem;
+      }
     }
   }
   &.large-size {
     padding: 1rem 1rem;
     font-size: 2.4rem;
     line-height: 2.4rem;
-    &::before {
+    img {
       width: 2.4rem;
       height: 2.4rem;
-      margin-right: 1rem;
+      + span {
+        margin-left: 1rem;
+      }
     }
   }
   &.normal-type {
@@ -69,18 +70,34 @@ const ButtonStyled = styled.button`
   &.link-type {
     background-color: transparent;
     border: none;
+    padding: 0;
   }
 `;
 
-const Button = ({ size, icon, text, type, htmlType, className, ...rest }) => {
+const Button = ({
+  size,
+  icon,
+  text,
+  type,
+  htmlType,
+  className,
+  onClick,
+  ...rest
+}) => {
   return (
     <ButtonStyled
       type={htmlType}
-      className={[className, `${type}-type`, `${size}-size`].join(" ")}
-      icon={icon}
+      className={[
+        className,
+        `${type}-type`,
+        `${size}-size`,
+        icon && text ? "btn-filled" : "",
+      ].join(" ")}
+      onClick={onClick}
       {...rest}
     >
-      {text}
+      {icon && <img src={icon} alt="btn-icon" />}
+      {text && <span>{text}</span>}
     </ButtonStyled>
   );
 };

@@ -9,8 +9,8 @@ const { tealGreen, lightGray } = colors;
 const SidebarItemStyled = styled.div`
   display: flex;
   align-items: center;
-  padding: 1.2rem;
-  font-size: 1.4rem;
+  padding: 1.2rem 2.2rem;
+  font-size: 1.8rem;
   &::before {
     content: "";
     display: block;
@@ -32,7 +32,7 @@ const SidebarStyled = styled.aside`
 
   ul li {
     margin-bottom: 1.2rem;
-    border: solid 0.4rem transparent;
+    border: solid 0.8rem transparent;
     &:has(a.active) {
       border-left-color: ${tealGreen};
       background-color: ${colors.lightGray};
@@ -40,9 +40,9 @@ const SidebarStyled = styled.aside`
     a {
       text-decoration: none;
       color: black;
-      &.active {
+      &.active,
+      &:hover {
         color: ${tealGreen};
-        font-weight: bold;
         div::before {
           filter: invert(35%) sepia(97%) saturate(620%) hue-rotate(132deg)
             brightness(94%) contrast(104%);
