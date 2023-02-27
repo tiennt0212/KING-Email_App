@@ -5,5 +5,6 @@ import Avatar from "./Avatar";
 
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import { EmailPreview, EmailView } from "./Email";
 
-export { Header, Input, Button, Avatar, Sidebar };
+export { Header, Input, Button, Avatar, Sidebar, EmailPreview, EmailView };

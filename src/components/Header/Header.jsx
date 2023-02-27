@@ -7,14 +7,14 @@ import { ROUTES } from "utils/constants";
 // import gifPurpleInk from "assets/images/purple-ink.gif";
 // import gifInkPlanet from "assets/images/ink-planet.gif";
 // import gifInkDiscover from "assets/images/ink-discover.gif";
-import letter1 from "assets/images/letter1.gif";
+// import letter1 from "assets/images/letter1.gif";
 import colors from "styles/colors";
 
 const HeaderStyled = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.2rem 2rem;
+  padding: 1.2rem 3.2rem;
   border-bottom: solid 0.2rem ${colors.lightGray};
   .left-side {
     display: flex;
@@ -25,15 +25,15 @@ const HeaderStyled = styled.header`
     h2 {
       background-color: ${colors.tealGreen};
       color: white;
-      padding: 0.4rem 1rem 0.2rem;
+      padding: 0.4rem 1rem 0rem;
       border-radius: 0.8rem;
-      font-size: 3.2rem;
+      font-size: 4.8rem;
     }
     p {
       color: ${colors.tealGreen};
-      font-size: 1.2rem;
-      line-height: 1.4rem;
-      margin-left: 0.9rem;
+      font-size: 1.6rem;
+      line-height: 1.8rem;
+      margin-left: 1.8rem;
     }
   }
   .right-side {
@@ -72,9 +72,7 @@ const Header = () => {
       <div className="right-side">
         <ul>
           <li>
-            <NavLink to={ROUTES.B_EMAILS} end>
-              Postcard
-            </NavLink>
+            <NavLink to={ROUTES.B_EMAILS}>Postcards</NavLink>
           </li>
           <li>
             <NavLink to={ROUTES.WORLD_OF_STAMPS} end>
