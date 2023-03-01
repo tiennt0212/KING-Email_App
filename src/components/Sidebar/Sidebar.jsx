@@ -161,7 +161,6 @@ const Sidebar = (props) => {
             </li>
           ))}
         </ul>
-        <hr />
       </div>
     </SidebarStyled>
   );
