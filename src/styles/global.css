@@ -1,3 +1,7 @@
+html {
+  font-size: 62.5%;
+}
+
 body {
   margin: 0;
   font-family: "Gilroy";
@@ -5,8 +9,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-html {
-  font-size: 62.5%;
+@media (max-width: 768px) {
+  html {
+    font-size: 55%;
+  }
 }
 
 code {
@@ -30,4 +36,11 @@ code {
   display: -webkit-box;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.no-new-line {
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
 }

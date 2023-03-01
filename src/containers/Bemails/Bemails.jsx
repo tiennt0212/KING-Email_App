@@ -1,15 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, Avatar, EmailPreview } from "components";
+import { Button, Avatar, EmailPreview, EmailView } from "components";
+import EmailPreviewPanel from "./EmailPreviewPanel";
 import { useDispatch, useSelector } from "hooks";
 import colors from "styles/colors";
+import { BREAKPOINTS } from "utils/constants";
 import mail from "assets/images/mail.png";
-
-const LeftSideStyled = styled.div`
-  border-right: solid 0.2rem ${colors.lightGray};
+const EmailLayout = styled.div`
+  display: flex;
+  > .left-side {
+    border-right: solid 0.2rem ${colors.lightGray};
+    flex-grow: 1;
+    /* flex-shrink: 1; */
+    max-width: 57rem;
+  }
+  > .right-side {
+    flex-grow: 2;
+  }
+  @media (max-width: ${BREAKPOINTS.LG}) {
+  }
 `;
-
-const RightSideStyled = styled.div``;
 
 const Bemails = () => {
   const { count } = useSelector(({ count }) => ({ count }));
@@ -17,10 +27,42 @@ const Bemails = () => {
     increment: count.increment,
     incrementAsync: count.incrementAsync,
   }));
+  const exampleEmailList = [
+    {
+      senderAvt:
+        "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
+      senderName: "Tien Nguyen",
+      cardTitle: "Hello World",
+      time: "26-Feb-2023",
+      cardContent:
+        "Lorem ipsum ipsim... I first want to apologize that we haven’t been able to connect recently. I feel like somewhere along the way I must have made it difficult to communicate",
+    },
+    {
+      senderAvt:
+        "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
+      senderName: "Tien Nguyen",
+      cardTitle: "Hello World",
+      time: "26-Feb-2023",
+      cardContent:
+        "Lorem ipsum ipsim... I first want to apologize that we haven’t been able to connect recently. I feel like somewhere along the way I must have made it difficult to communicate",
+    },
+    {
+      senderAvt:
+        "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
+      senderName: "Tien Nguyen",
+      cardTitle: "Hello World",
+      time: "26-Feb-2023",
+      cardContent:
+        "Lorem ipsum ipsim... I first want to apologize that we haven’t been able to connect recently. I feel like somewhere along the way I must have made it difficult to communicate",
+    },
+  ];
   return (
-    <>
-      <LeftSideStyled>
-        <EmailPreview
+    <EmailLayout>
+      <div className="left-side">
+        <EmailPreviewPanel emailList={exampleEmailList} />
+      </div>
+      <div className="right-side">
+        <EmailView
           senderAvt={
             "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg"
           }
@@ -31,31 +73,7 @@ const Bemails = () => {
             "Lorem ipsum ipsim... I first want to apologize that we haven’t been able to connect recently. I feel like somewhere along the way I must have made it difficult to communicate"
           }
         />
-        <EmailPreview
-          senderAvt={
-            "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg"
-          }
-          senderName=" Tien Nguyen Tien Nguyen"
-          cardTitle={"Hello World"}
-          time={"26-Feb-2023"}
-          cardContent={
-            "Lorem ipsum ipsim... I first want to apologize that we haven’t been able to connect recently. I feel like somewhere along the way I must have made it difficult to communicate"
-          }
-        />
-        <EmailPreview
-          senderAvt={
-            "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg"
-          }
-          senderName=" Tien Nguyen Tien Nguyen"
-          cardTitle={"Hello World"}
-          time={"26-Feb-2023"}
-          cardContent={
-            "Lorem ipsum ipsim... I first want to apologize that we haven’t been able to connect recently. I feel like somewhere along the way I must have made it difficult to communicate"
-          }
-        />
-      </LeftSideStyled>
-      <RightSideStyled>
-        <h1> This is Bemails container</h1>
+        {/* <h1> This is Bemails container</h1>
         <h2> This is Bemails container</h2>
         <h3> This is Bemails container</h3>
         <h4> This is Bemails container</h4>
@@ -93,9 +111,9 @@ const Bemails = () => {
           src={
             "htt://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*"
           }
-        />
-      </RightSideStyled>
-    </>
+        /> */}
+      </div>
+    </EmailLayout>
   );
 };
 

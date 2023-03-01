@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import colors from "styles/colors";
 
-const { tealGreen, lightGray } = colors;
+const { tealGreen, lightGray, darkGray } = colors;
 const ButtonStyled = styled.button`
   /* display: inline-flex; */
   border-radius: 0.6rem;
@@ -64,8 +64,12 @@ const ButtonStyled = styled.button`
   }
   &.transparent-type {
     background-color: transparent;
-    color: ${tealGreen};
-    border: solid 0.1rem ${tealGreen};
+    color: ${darkGray};
+    border: solid 0.1rem ${darkGray};
+    &:hover {
+      color: ${tealGreen};
+      border-color: ${tealGreen};
+    }
   }
   &.link-type {
     background-color: transparent;
