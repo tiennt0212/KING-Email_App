@@ -13,6 +13,7 @@ const EmailLayout = styled.div`
     flex-grow: 1;
     /* flex-shrink: 1; */
     max-width: 57rem;
+    overflow-y: auto;
   }
   > .right-side {
     flex-grow: 2;

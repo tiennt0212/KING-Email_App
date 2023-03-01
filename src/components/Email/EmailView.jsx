@@ -15,6 +15,7 @@ const Wrapper = styled.div`
 `;
 const TopUtilityStyled = styled.div`
   height: 9rem;
+  min-height: 6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,6 +36,8 @@ const EmailViewStyled = styled.div`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  overflow: auto;
+  /* overflow: ; */
   .card-content {
     background-color: ${lightGray};
     padding: 2.4rem;
@@ -53,6 +56,7 @@ const BottomUtilityStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 9rem;
+  min-height: 6rem;
   padding: 0 3.2rem;
 `;
 

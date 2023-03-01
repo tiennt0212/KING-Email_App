@@ -1,5 +1,6 @@
 html {
   font-size: 62.5%;
+  height: 100%;
 }
 
 body {
@@ -7,6 +8,11 @@ body {
   font-family: "Gilroy";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
 }
 
 @media (max-width: 768px) {
