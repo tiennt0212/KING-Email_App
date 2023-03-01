@@ -40,9 +40,12 @@ const SidebarStyled = styled.aside`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 90vh;
   font-size: 14px;
   border-right: solid 0.2rem ${lightGray};
+  overflow-y: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+  overflow-y: auto;
 
   ul li {
     margin-bottom: 1.2rem;
