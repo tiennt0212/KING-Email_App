@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "components/origin";
 import colors from "styles/colors";
 import icDoubleLeft from "assets/images/ic-double-left.png";
+import { BREAKPOINTS } from "utils/constants";
 
 const { tealGreen, lightGray } = colors;
 const SidebarItemStyled = styled.div`
@@ -11,7 +12,21 @@ const SidebarItemStyled = styled.div`
   align-items: center;
   padding: 1.2rem 2.2rem;
   font-size: 1.8rem;
-  &::before {
+  min-width: 18rem;
+  img {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+  span {
+    margin-left: 1rem;
+  }
+  @media (max-width: ${BREAKPOINTS.LG}) {
+    min-width: 0;
+    span {
+      display: none;
+    }
+  }
+  /* &::before {
     content: "";
     display: block;
     width: 2.4rem;
@@ -19,8 +34,7 @@ const SidebarItemStyled = styled.div`
     background-image: url(${(props) => props.icon});
     background-size: contain;
     background-repeat: no-repeat;
-    margin-right: 1rem;
-  }
+  } */
 `;
 const SidebarStyled = styled.aside`
   display: flex;
@@ -43,7 +57,7 @@ const SidebarStyled = styled.aside`
       &.active,
       &:hover {
         color: ${tealGreen};
-        div::before {
+        img {
           filter: invert(35%) sepia(97%) saturate(620%) hue-rotate(132deg)
             brightness(94%) contrast(104%);
         }
@@ -53,7 +67,12 @@ const SidebarStyled = styled.aside`
 `;
 
 const SidebarItem = ({ icon, name }) => {
-  return <SidebarItemStyled icon={icon}>{name}</SidebarItemStyled>;
+  return (
+    <SidebarItemStyled icon={icon}>
+      <img src={icon} alt="menu-item-icon" />
+      <span>{name}</span>
+    </SidebarItemStyled>
+  );
 };
 
 const Sidebar = (props) => {

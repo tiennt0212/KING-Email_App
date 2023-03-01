@@ -8,75 +8,57 @@ import icMail from "assets/images/mail.png";
 import icBookmark from "assets/images/ic-bookmark.svg";
 import icBookmarkFilled from "assets/images/ic-bookmark-filled.svg";
 
+const { darkGray, black } = colors;
 const EmailPreviewStyled = styled.div`
   background-color: white;
   border-radius: 0.8rem;
   padding: 2rem 2rem 1rem;
-  display: grid;
-  grid-template-columns: 6.8rem 13rem 25rem 4.8rem;
-  grid-template-rows: 2rem 2.8rem 5.8rem 3.6rem;
   position: relative;
-
+  color: ${darkGray};
+  font-size: 1.6rem;
   &:hover {
     box-shadow: 0px 10px 34px rgba(0, 0, 0, 0.08);
     transition: transform 0.2s;
-    transform: scale(1.02);
-    z-index: 10;
-  }
-  span {
-    grid-column: 1/2;
-    grid-row: 1/3;
-    /* grid-column-start: 1; */
-    width: 100%;
-    height: 100%;
+    transform: scale(1.002);
+    z-index: 1;
   }
   h3 {
+    line-height: 2.5rem;
     font-size: 1.8rem;
-    &.sender-name {
-      color: ${colors.darkGray};
-      grid-column: 2/4;
-      grid-row: 1/2;
-    }
-    &.card-title {
-      margin-top: 1rem;
-      grid-row-start: 2;
-      grid-column: 2/4;
+    color: ${black};
+    > .sender-name {
+      color: ${darkGray};
     }
   }
-  p {
-    color: ${colors.darkGray};
-    &.card-content {
-      margin-top: 0.8rem;
-      font-size: 1.6rem;
-      line-height: 2.5rem;
-      grid-column: 2/4;
-      grid-row-start: 3;
-      -webkit-line-clamp: 2;
+  .card-content {
+    color: ${darkGray};
+    font-size: inherit;
+    line-height: 2.5rem;
+    -webkit-line-clamp: 2;
+  }
+  .card-timestamp {
+    /* margin-top: 1.3rem; */
+    color: ${darkGray};
+    font-size: inherit;
+    line-height: 2.5rem;
+  }
+  .btn-change-state {
+    font-size: 1.4rem;
+    color: ${darkGray};
+    font-weight: bold;
+    &:not(:hover) {
+      filter: invert(56%) sepia(10%) saturate(33%) hue-rotate(10deg)
+        brightness(99%) contrast(85%);
     }
-    &.card-timestamp {
-      /* margin-top: 1.3rem; */
-      grid-column: 2/3;
-      font-size: 1.4rem;
-      line-height: 4rem;
+    &:hover {
+      color: ${black};
     }
   }
-  button {
-    &.btn-change-state {
-      grid-column: 3/4;
-      font-size: 1.4rem;
-      color: ${colors.darkGray};
-      &:not(:hover) {
-        filter: invert(56%) sepia(10%) saturate(33%) hue-rotate(10deg)
-          brightness(99%) contrast(85%);
-      }
-      &:hover {
-        color: ${colors.black};
-      }
-    }
-    &.btn-bookmark {
-      grid-column: 4;
-      grid-row: 1/3;
-      margin: -2rem -2rem 2rem 2rem;
+  .btn-bookmark {
+    margin: -2rem -2rem 2rem 2rem;
+    &:not(:hover) {
+      filter: invert(57%) sepia(5%) saturate(146%) hue-rotate(315deg)
+        brightness(98%) contrast(79%);
     }
   }
   /* button.btn-bookmark:after {
@@ -105,14 +87,15 @@ const EmailPreview = ({
 }) => {
   return (
     <EmailPreviewStyled className={className}>
-      <Avatar size="large" src={senderAvt} />
-      <h3 className="sender-name">{senderName}</h3>
-      <h3 className="card-title">{cardTitle}</h3>
-      <p className="card-content limit-text-line">{cardContent}</p>
+      <Avatar size="large" src={senderAvt} alt="sender-avt" />
+      <h3>
+        {cardTitle} - <span className="sender-name">{senderName}</span>
+      </h3>
       <p className="card-timestamp">{time}</p>
+      <p className="card-content limit-text-line">{cardContent}</p>
       <Button
         className="btn-change-state"
-        text="Mark as unread"
+        text="Mark as read"
         icon={icMail}
         type="link"
         size="normal"
