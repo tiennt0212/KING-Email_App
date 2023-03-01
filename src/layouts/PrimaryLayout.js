@@ -9,12 +9,12 @@ const ContentStyled = styled.div`
   height: calc(100% - 9rem);
 `;
 
-const PrimaryLayout = ({ children, sidebarItems, ...rest }) => {
+const PrimaryLayout = ({ children, sidebar, ...rest }) => {
   return (
     <PrimaryLayoutStyled>
       <Header />
       <ContentStyled>
-        <Sidebar items={sidebarItems} />
+        <Sidebar {...sidebar} />
         {children}
       </ContentStyled>
     </PrimaryLayoutStyled>
