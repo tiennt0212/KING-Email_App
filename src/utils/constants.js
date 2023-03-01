@@ -4,6 +4,7 @@ export const ROUTES = {
   B_EMAIL_COMPOSE: "/postcards/compose",
   BOOKMARKS: "/bookmarks",
   WORLD_OF_STAMPS: "/world-of-stamps",
+  SETTINGS: "/settings",
 };
 
 export const BREAKPOINTS = {

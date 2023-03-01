@@ -9,9 +9,8 @@ import { BREAKPOINTS } from "utils/constants";
 const { tealGreen, lightGray } = colors;
 const SidebarItemStyled = styled.div`
   display: flex;
-  align-items: center;
-  padding: 1.2rem 2.2rem;
-  font-size: 1.8rem;
+  align-items: flex-end;
+  padding: 1rem 2.2rem;
   min-width: 18rem;
   img {
     width: 2.4rem;
@@ -19,6 +18,8 @@ const SidebarItemStyled = styled.div`
   }
   span {
     margin-left: 1rem;
+    font-size: 1.8rem;
+    line-height: 2.1rem;
   }
   @media (max-width: ${BREAKPOINTS.LG}) {
     min-width: 0;
@@ -26,15 +27,64 @@ const SidebarItemStyled = styled.div`
       display: none;
     }
   }
-  /* &::before {
-    content: "";
-    display: block;
-    width: 2.4rem;
-    height: 2.4rem;
-    background-image: url(${(props) => props.icon});
-    background-size: contain;
-    background-repeat: no-repeat;
-  } */
+  &.user-wallet {
+    padding-left: 1.9rem;
+    border-radius: 0.8rem;
+
+    img {
+      width: 3.2rem;
+      height: 3.2rem;
+    }
+    span {
+      margin-left: 0.6rem;
+      line-height: 2.5rem;
+    }
+    &:not(:hover) img {
+      filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(312deg)
+        brightness(90%) contrast(107%);
+    }
+    &:hover {
+      cursor: pointer;
+      img {
+        transform: scale(1.5);
+        transition: transform 0.4s;
+      }
+      span {
+        font-size: 2.4rem;
+        margin-left: 1.2rem;
+        transition: font-size 0.5s;
+        transition: margin-left 0.15s;
+        background: linear-gradient(
+          90deg,
+          rgba(85, 134, 255, 1) 0%,
+          rgba(175, 115, 255, 1) 30%,
+          rgba(210, 193, 255, 1) 70%,
+          rgba(223, 140, 255, 1) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+  &.need-support {
+    img {
+      width: 3.6rem;
+      height: 3.6rem;
+      margin-left: -0.5rem;
+      margin-bottom: -0.5rem;
+    }
+    span {
+      margin-left: 0.5rem;
+    }
+    &:hover {
+      cursor: pointer;
+      color: ${tealGreen};
+      img {
+        filter: invert(35%) sepia(97%) saturate(620%) hue-rotate(132deg)
+          brightness(94%) contrast(104%);
+      }
+    }
+  }
 `;
 const SidebarStyled = styled.aside`
   display: flex;
@@ -48,7 +98,7 @@ const SidebarStyled = styled.aside`
   overflow-y: auto;
 
   ul li {
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.6rem;
     border: solid 0.8rem transparent;
     &:has(a.active) {
       border-left-color: ${tealGreen};
@@ -69,9 +119,9 @@ const SidebarStyled = styled.aside`
   }
 `;
 
-const SidebarItem = ({ icon, name }) => {
+const SidebarItem = ({ icon, name, action, htmlClass }) => {
   return (
-    <SidebarItemStyled icon={icon}>
+    <SidebarItemStyled onClick={action} className={htmlClass}>
       <img src={icon} alt="menu-item-icon" />
       <span>{name}</span>
     </SidebarItemStyled>
@@ -79,24 +129,39 @@ const SidebarItem = ({ icon, name }) => {
 };
 
 const Sidebar = (props) => {
-  const { items } = props;
+  const { topUtilities, botUtilities } = props;
 
   return (
     <SidebarStyled>
-      <nav>
+      <div className="top-utilities">
+        <nav>
+          <ul>
+            {topUtilities.map((item) => (
+              <li key={item.route}>
+                <NavLink to={item.route} end>
+                  <SidebarItem {...item} />
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      <div className="bottom-utilities">
         <ul>
-          {items.map((item) => (
+          {botUtilities.map((item) => (
             <li key={item.route}>
-              <NavLink to={item.route} end>
+              {item.route ? (
+                <NavLink to={item.route} end>
+                  <SidebarItem {...item} />
+                </NavLink>
+              ) : (
                 <SidebarItem {...item} />
-              </NavLink>
+              )}
             </li>
           ))}
         </ul>
-      </nav>
-      <div className="controls-box">
         <hr />
-        <Button icon={icDoubleLeft}></Button>
       </div>
     </SidebarStyled>
   );
