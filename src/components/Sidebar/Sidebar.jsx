@@ -137,7 +137,7 @@ const Sidebar = (props) => {
         <nav>
           <ul>
             {topUtilities.map((item) => (
-              <li key={item.route}>
+              <li key={`${item.name}-${item.route}`}>
                 <NavLink to={item.route} end>
                   <SidebarItem {...item} />
                 </NavLink>
@@ -150,7 +150,7 @@ const Sidebar = (props) => {
       <div className="bottom-utilities">
         <ul>
           {botUtilities.map((item) => (
-            <li key={item.route}>
+            <li key={`${item.name}-${item.route}`}>
               {item.route ? (
                 <NavLink to={item.route} end>
                   <SidebarItem {...item} />

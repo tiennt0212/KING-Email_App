@@ -2,8 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import noAvt from "assets/images/no-avt.png";
+import icFeather from "assets/images/ic-feather1.png";
 const AvatarStyled = styled.span`
   display: inline-block;
+  border-radius: 50%;
+
   &.small-size {
     width: 2.4rem;
     height: 2.4rem;
@@ -19,7 +22,7 @@ const AvatarStyled = styled.span`
   img {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
+    border-radius: inherit;
   }
 `;
 
@@ -31,7 +34,7 @@ const Avatar = ({ src, alt, size, className, ...rest }) => (
       {...rest}
       onError={({ currentTarget }) => {
         currentTarget.onerror = null;
-        currentTarget.src = noAvt;
+        currentTarget.src = icFeather;
       }}
     />
   </AvatarStyled>
@@ -44,7 +47,7 @@ Avatar.propTypes = {
 };
 
 Avatar.defaultProps = {
-  src: noAvt,
+  src: icFeather,
   alt: "user-avatar",
   size: "normal",
 };

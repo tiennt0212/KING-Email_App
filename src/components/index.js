@@ -3,8 +3,16 @@ import { Button, Input } from "./origin";
 // import Input from "./_origin/Input";
 import Avatar from "./Avatar";
 
-import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { EmailPreview, EmailView } from "./Email";
+import AddressShorten from "./Address";
 
-export { Header, Input, Button, Avatar, Sidebar, EmailPreview, EmailView };
+export {
+  Input,
+  Button,
+  Avatar,
+  Sidebar,
+  EmailPreview,
+  EmailView,
+  AddressShorten,
+};

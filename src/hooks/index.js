@@ -1,3 +1,3 @@
-import { useSelector, useDispatch } from "./useRedux";
+import { useSelector, useDispatch, useStore } from "./useRedux";
 
-export { useSelector, useDispatch };
+export { useSelector, useDispatch, useStore };

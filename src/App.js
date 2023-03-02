@@ -10,7 +10,7 @@ import "./styles/global.css";
 import { PrimaryLayout } from "layouts";
 import icPlane from "assets/images/ic-plane.png";
 import icPaper from "assets/images/ic-paper.png";
-import icWallet from "assets/images/ic-wallet.png";
+import icWallet from "assets/images/ic-wallet.gif";
 import icGear from "assets/images/ic-gear.png";
 import icQuestion from "assets/images/ic-question.png";
 
@@ -21,12 +21,12 @@ function App() {
   ];
 
   const personalizeItems = [
-    {
-      icon: icWallet,
-      action: () => alert("Click on Wallet button"),
-      name: "Your Wallet",
-      htmlClass: "user-wallet",
-    },
+    // {
+    //   icon: icWallet,
+    //   action: () => alert("Click on Wallet button"),
+    //   name: "Your Wallet",
+    //   htmlClass: "user-wallet",
+    // },
     { icon: icGear, route: ROUTES.SETTINGS, name: "Settings" },
     {
       icon: icQuestion,
@@ -51,6 +51,7 @@ function App() {
               <Route path={ROUTES.B_EMAIL_COMPOSE} element={<Bemails />} />
               <Route path={ROUTES.BOOKMARKS} element={<Bemails />} />
               <Route path={ROUTES.WORLD_OF_STAMPS} element={<Bemails />} />
+              <Route path={ROUTES.SETTINGS} element={<Bemails />} />
             </Routes>
           </PrimaryLayout>
         </BrowserRouter>
