@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Header, Sidebar } from "components";
+import { Header, Sidebar, Modal } from "components";
 const PrimaryLayoutStyled = styled.div`
   height: 100%;
 `;
@@ -16,6 +16,7 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
       <ContentStyled>
         <Sidebar {...sidebar} />
         {children}
+        <Modal />
       </ContentStyled>
     </PrimaryLayoutStyled>
   );

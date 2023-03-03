@@ -6,5 +6,15 @@ import Avatar from "./Avatar";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { EmailPreview, EmailView } from "./Email";
+import Modal from "./Modal/Modal";
 
-export { Header, Input, Button, Avatar, Sidebar, EmailPreview, EmailView };
+export {
+  Header,
+  Input,
+  Button,
+  Avatar,
+  Sidebar,
+  EmailPreview,
+  EmailView,
+  Modal,
+};
