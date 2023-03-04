@@ -18,21 +18,38 @@ const UserModel = {
   },
   effects: (dispatch) => ({
     async getWallet(payload) {
-      console.log("Dispatch event REQUEST_ADDRESS");
-      dispatchEvent("REQUEST_ADDRESS");
-      window.addEventListener(
-        "ICONEX_RELAY_RESPONSE",
-        ({ detail: { type, payload } }) => {
+      try {
+        console.log("Dispatch event REQUEST_ADDRESS");
+        dispatchEvent("REQUEST_ADDRESS");
+        const handleResponseAddress = ({ detail: { type, payload } }) => {
           if ((type = "RESPONSE_ADDRESS")) {
             console.log(`Get ${payload}`);
             this.setWallet({ address: payload });
             localStorage.setItem("address", payload);
           }
+        };
+        window.addEventListener("ICONEX_RELAY_RESPONSE", handleResponseAddress);
+        window.removeEventListener(
+          "ICONEX_RELAY_RESPONSE",
+          handleResponseAddress
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async signTx(transaction) {
+      dispatchEvent("REQUEST_JSON-RPC", transaction);
+      const handleSignTX = ({ detail: { type, payload } }) => {
+        if (type === "RESPONSE_JSON-RPC") {
+          resolve(payload);
+          console.log("Done");
         }
-      );
-      window.removeEventListener("ICONEX_RELAY_RESPONSE", () =>
-        console.log("Get Wallet successfully")
-      );
+        if (type === "CANCEL_JSON-RPC") {
+          console.log("Cancel");
+        }
+      }
+      window.addEventListener("ICONEX_RELAY_RESPONSE", handleSignTX);
+      window.removeEventListener("ICONEX_RELAY_RESPONSE", handleSignTX);
     },
   }),
   selectors: (slice, createSelector, hasProps) => ({

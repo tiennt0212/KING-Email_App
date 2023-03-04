@@ -1,3 +1,7 @@
+// Ref my html code: https://github.com/tiennt0212/devera-nft-presale/blob/master/presale-nft/exampleHTML.html
+// Ref ICONex doc: https://github.com/icon-project/iconex_chrome_extension/tree/master/docs/iconex_connect
+// Ref icon-sdk-js doc: https://github.com/icon-project/icon-sdk-js
+// Ref ICON Dev Portal doc: https://docs.icon.community/icon-stack/client-apis/javascript-sdk/examples
 import IconService from "icon-sdk-js";
 // import HttpProvider from "icon-sdk-js/build/transport/http/HttpProvider";
 
@@ -31,10 +35,11 @@ const traceTransaction = async (txHash) => {
   return await iconService.getTrace(txHash).execute();
 };
 
-const dispatchEvent = (type) => {
+const dispatchEvent = (type, payload) => {
   const customEvent = new CustomEvent("ICONEX_RELAY_REQUEST", {
     detail: {
       type,
+      payload
     },
   });
   window.dispatchEvent(customEvent);

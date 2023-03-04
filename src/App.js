@@ -10,7 +10,6 @@ import "./styles/global.css";
 import { PrimaryLayout } from "layouts";
 import icPlane from "assets/images/ic-plane.png";
 import icPaper from "assets/images/ic-paper.png";
-import icWallet from "assets/images/ic-wallet.gif";
 import icGear from "assets/images/ic-gear.png";
 import icQuestion from "assets/images/ic-question.png";
 
