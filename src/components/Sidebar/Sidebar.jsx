@@ -2,9 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { Button } from "components/origin";
+import { useDispatch, useSelector } from "hooks";
+import { BREAKPOINTS } from "utils/constants";
 import colors from "styles/colors";
 import icDoubleLeft from "assets/images/ic-double-left.png";
-import { BREAKPOINTS } from "utils/constants";
 
 const { tealGreen, lightGray } = colors;
 const SidebarItemStyled = styled.div`
@@ -130,7 +131,9 @@ const SidebarItem = ({ icon, name, action, htmlClass }) => {
 
 const Sidebar = (props) => {
   const { topUtilities, botUtilities } = props;
-
+  const { openModal } = useDispatch(({ AppStore }) => ({
+    openModal: AppStore.openModal,
+  }));
   return (
     <SidebarStyled>
       <div className="top-utilities">
@@ -148,6 +151,15 @@ const Sidebar = (props) => {
       </div>
 
       <div className="bottom-utilities">
+        <Button
+          text="text"
+          onClick={() =>
+            openModal({
+              title: "Test Modal",
+              message: "I'm testing message",
+            })
+          }
+        />
         <ul>
           {botUtilities.map((item) => (
             <li key={`${item.name}-${item.route}`}>

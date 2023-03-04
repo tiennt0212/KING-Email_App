@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { Sidebar } from "components";
-import { Header } from "containers";
 import { useDispatch, useSelector, useStore } from "hooks";
+import { Sidebar, Modal } from "components";
+import { Header } from "containers";
 const PrimaryLayoutStyled = styled.div`
   height: 100%;
+  position: relative;
 `;
 const ContentStyled = styled.div`
   display: flex;
@@ -12,13 +13,18 @@ const ContentStyled = styled.div`
 `;
 
 const PrimaryLayout = ({ children, sidebar, ...rest }) => {
-  const { wallet, info } = useSelector(({ User, cart }) => ({
+  const { wallet, info, modal } = useSelector(({ User, AppStore }) => ({
     wallet: User.wallet,
     info: User.info,
+    modal: AppStore.modal,
   }));
-  const { getWallet } = useDispatch(({ User }) => ({
-    getWallet: User.getWallet,
-  }));
+  const { getWallet, openModal, closeModal } = useDispatch(
+    ({ User, AppStore }) => ({
+      getWallet: User.getWallet,
+      openModal: AppStore.openModal,
+      closeModal: AppStore.closeModal,
+    })
+  );
 
   const { isLoggedIn } = useStore(({ User }) => ({
     isLoggedIn: User.isLoggedIn,
@@ -36,6 +42,7 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
         <Sidebar {...sidebar} />
         {children}
       </ContentStyled>
+      <Modal {...modal} onCloseModal={closeModal} />
     </PrimaryLayoutStyled>
   );
 };

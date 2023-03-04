@@ -7,6 +7,8 @@ import Sidebar from "./Sidebar";
 import { EmailPreview, EmailView } from "./Email";
 import AddressShorten from "./Address";
 
+import Modal from "./Modal/Modal";
+
 export {
   Input,
   Button,
@@ -15,4 +17,5 @@ export {
   EmailPreview,
   EmailView,
   AddressShorten,
+  Modal,
 };
