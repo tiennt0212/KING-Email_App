@@ -1,8 +1,8 @@
 const initialState = {
   modal: {
     visible: false,
-    title: "Hello World!",
-    message: "I'm Modal",
+    title: null,
+    message: null,
     type: null,
   },
   notification: { visible: false, message: "I'm notification" },
@@ -32,6 +32,9 @@ const AppStore = {
         message,
         type,
       });
+    },
+    closeModal() {
+      this.setModal(initialState.modal);
     },
     pushNotification({ message }) {
       this.setNotification({ visible: true, message });

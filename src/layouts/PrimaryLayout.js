@@ -4,6 +4,7 @@ import { Header, Sidebar, Modal } from "components";
 import { useDispatch, useSelector } from "hooks";
 const PrimaryLayoutStyled = styled.div`
   height: 100%;
+  position: relative;
 `;
 const ContentStyled = styled.div`
   display: flex;
@@ -12,8 +13,9 @@ const ContentStyled = styled.div`
 
 const PrimaryLayout = ({ children, sidebar, ...rest }) => {
   const { modal } = useSelector(({ AppStore }) => ({ modal: AppStore.modal }));
-  const { openModal } = useDispatch(({ AppStore }) => ({
+  const { openModal, closeModal } = useDispatch(({ AppStore }) => ({
     openModal: AppStore.openModal,
+    closeModal: AppStore.closeModal,
   }));
   return (
     <PrimaryLayoutStyled>
@@ -21,8 +23,8 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
       <ContentStyled>
         <Sidebar {...sidebar} />
         {children}
-        <Modal {...modal} />
       </ContentStyled>
+      <Modal {...modal} onCloseModal={closeModal} />
     </PrimaryLayoutStyled>
   );
 };
