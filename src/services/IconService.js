@@ -4,10 +4,12 @@
 // Ref ICON Dev Portal doc: https://docs.icon.community/icon-stack/client-apis/javascript-sdk/examples
 import IconService from "icon-sdk-js";
 // import HttpProvider from "icon-sdk-js/build/transport/http/HttpProvider";
+import { LISBON, STEP } from "utils/constants";
 
-const { HttpProvider } = IconService;
+const { HttpProvider, IconConverter } = IconService;
+const { CallBuilder, CallTransactionBuilder } = IconService.IconBuilder;
 
-const httpProvider = new HttpProvider("https://ctz.solidwallet.io/api/v3");
+const httpProvider = new HttpProvider(LISBON.RPC);
 const iconService = new IconService(httpProvider);
 
 const getTotalSupply = async () => {
@@ -39,7 +41,7 @@ const dispatchEvent = (type, payload) => {
   const customEvent = new CustomEvent("ICONEX_RELAY_REQUEST", {
     detail: {
       type,
-      payload
+      payload,
     },
   });
   window.dispatchEvent(customEvent);
@@ -60,4 +62,36 @@ const handleEvent = (event) => {
 
 const getWallet = () => dispatchEvent("REQUEST_ADDRESS");
 
-export { dispatchEvent, handleEvent, getWallet };
+const callTransactionBuilder = new CallTransactionBuilder()
+  .nid(IconConverter.toBigNumber(LISBON.NID))
+  .version(IconConverter.toBigNumber(LISBON.VER));
+
+const callTX = async ({
+  from,
+  scoreAddress,
+  methodName,
+  params,
+  stepLimit,
+}) => {
+  // CallTransactionBuilder
+  const tx = callTransactionBuilder
+    .from(from)
+    .to(scoreAddress)
+    .method(methodName)
+    .params({ ...params }.stepLimit(stepLimit || STEP.MEDIUM))
+    .build();
+  return await iconService.call(tx).execute();
+};
+
+const read = async ({ from, scoreAddress, methodName, params }) => {
+  // CallBuilder
+  // For invoking read-only function of SCORE
+  const tx = new CallBuilder()
+    .from(from)
+    .to(scoreAddress)
+    .method(methodName)
+    .params({ ...params })
+    .build();
+  return await iconService.call(tx).execute();
+};
+export { dispatchEvent, handleEvent, getWallet, read, callTX };

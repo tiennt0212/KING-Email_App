@@ -129,7 +129,6 @@ const Header = ({
   onConnectWallet,
   ...rest
 }) => {
-  console.log(isLoggedIn);
   return (
     <HeaderStyled>
       <div className="left-side">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector, useStore } from "hooks";
 import { Sidebar, Modal } from "components";
@@ -18,18 +18,21 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
     info: User.info,
     modal: AppStore.modal,
   }));
-  const { getWallet, openModal, closeModal } = useDispatch(
-    ({ User, AppStore }) => ({
-      getWallet: User.getWallet,
-      openModal: AppStore.openModal,
-      closeModal: AppStore.closeModal,
-    })
-  );
+
+  const { getWallet, authenticate, closeModal } = useDispatch(({ User, AppStore }) => ({
+    getWallet: User.getWallet,
+    authenticate: User.authenticate,
+    closeModal: AppStore.closeModal,
+  }));
 
   const { isLoggedIn } = useStore(({ User }) => ({
     isLoggedIn: User.isLoggedIn,
   }));
 
+  useEffect(() => {
+    // console.log("useEffect", authenticate, wallet.address)
+    authenticate({ address: wallet.address });
+  }, [isLoggedIn]);
   return (
     <PrimaryLayoutStyled>
       <Header
