@@ -3,18 +3,20 @@ import { Button, Input } from "./origin";
 // import Input from "./_origin/Input";
 import Avatar from "./Avatar";
 
-import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { EmailPreview, EmailView } from "./Email";
-import Modal from "./Modal/Modal";
+import AddressShorten from "./Address";
 
+import Modal from "./Modal/Modal";
+import { RegisterSBT } from "./Form";
 export {
-  Header,
   Input,
   Button,
   Avatar,
   Sidebar,
   EmailPreview,
   EmailView,
+  AddressShorten,
   Modal,
+  RegisterSBT,
 };

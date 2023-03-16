@@ -107,10 +107,10 @@ const Button = ({
 };
 
 Button.propTypes = {
-  size: PropTypes.oneOf(["small", "normal", "large"]),
+  size: PropTypes.oneOf(["small", "normal", "large", "custom"]),
   icon: PropTypes.string,
   text: PropTypes.string,
-  type: PropTypes.oneOf(["normal", "primary", "transparent", "link"]),
+  type: PropTypes.oneOf(["normal", "primary", "transparent", "link", "custom"]),
   htmlType: PropTypes.string,
 };
 

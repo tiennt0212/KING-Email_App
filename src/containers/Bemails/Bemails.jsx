@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "hooks";
 import colors from "styles/colors";
 import { BREAKPOINTS } from "utils/constants";
 import mail from "assets/images/mail.png";
+import { handleEvent, getWallet } from "services/IconService";
 const EmailLayout = styled.div`
   display: flex;
   > .left-side {
@@ -34,7 +35,7 @@ const Bemails = () => {
         "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
       senderName: "Tien Nguyen",
       cardTitle: "Hello World",
-      time: "26-Feb-2023",
+      time: "25-Feb-2023",
       cardContent:
         "Lorem ipsum ipsim... I first want to apologize that we haven’t been able to connect recently. I feel like somewhere along the way I must have made it difficult to communicate",
     },
@@ -52,7 +53,7 @@ const Bemails = () => {
         "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
       senderName: "Tien Nguyen",
       cardTitle: "Hello World",
-      time: "26-Feb-2023",
+      time: "27-Feb-2023",
       cardContent:
         "Lorem ipsum ipsim... I first want to apologize that we haven’t been able to connect recently. I feel like somewhere along the way I must have made it difficult to communicate",
     },

@@ -22,30 +22,43 @@ const ModalStyled = styled.div`
   border-radius: 1.6rem;
   width: 40%;
   text-align: center;
-  h3 {
+  > h3 {
     font-size: 2.4rem;
     line-height: 2.8rem;
   }
-  p {
+  > p {
     margin-top: 1rem;
     font-size: 1.8rem;
     line-height: 2.2rem;
   }
-  button {
+  > button {
     position: absolute;
     top: 0;
     right: 0;
   }
+  > .child-component {
+    margin-top: 2rem;
+  }
 `;
 
-const Modal = ({ visible, title, message, type, onCloseModal, ...rest }) => {
-  const modalRef = useOuterClick(onCloseModal);
+const Modal = ({
+  visible,
+  title,
+  message,
+  type,
+  closeable,
+  onCloseModal,
+  children,
+  ...rest
+}) => {
+  const modalRef = useOuterClick(closeable ? onCloseModal : null);
   return visible ? (
     <ModalContainerStyled>
       <ModalStyled ref={modalRef}>
-        <Button text="Close" onClick={onCloseModal} />
+        {closeable ? <Button text="Close" onClick={onCloseModal} /> : null}
         <h3>{title}</h3>
         <p>{message}</p>
+        <div className="child-component">{children}</div>
       </ModalStyled>
     </ModalContainerStyled>
   ) : null;

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Header, Sidebar, Modal } from "components";
-import { useDispatch, useSelector } from "hooks";
+import { useDispatch, useSelector, useStore } from "hooks";
+import { Sidebar, Modal } from "components";
+import { Header } from "containers";
 const PrimaryLayoutStyled = styled.div`
   height: 100%;
   position: relative;
@@ -12,14 +13,38 @@ const ContentStyled = styled.div`
 `;
 
 const PrimaryLayout = ({ children, sidebar, ...rest }) => {
-  const { modal } = useSelector(({ AppStore }) => ({ modal: AppStore.modal }));
-  const { openModal, closeModal } = useDispatch(({ AppStore }) => ({
-    openModal: AppStore.openModal,
-    closeModal: AppStore.closeModal,
+  const { wallet, info, modal } = useSelector(({ User, AppStore }) => ({
+    wallet: User.wallet,
+    info: User.info,
+    modal: AppStore.modal,
   }));
+
+  const { getWallet, authenticate, logout, closeModal } = useDispatch(
+    ({ User, AppStore }) => ({
+      getWallet: User.getWallet,
+      authenticate: User.authenticate,
+      logout: User.logout,
+      closeModal: AppStore.closeModal,
+    })
+  );
+
+  const { isLoggedIn } = useStore(({ User }) => ({
+    isLoggedIn: User.isLoggedIn,
+  }));
+
+  useEffect(() => {
+    if (isLoggedIn) authenticate({ address: wallet.address });
+  }, [isLoggedIn]);
   return (
     <PrimaryLayoutStyled>
-      <Header />
+      <Header
+        isLoggedIn={isLoggedIn}
+        userAvt={info?.avatar}
+        userAddr={wallet?.address}
+        userNickname={info?.name}
+        onConnectWallet={getWallet}
+        logoutHandler={logout}
+      />
       <ContentStyled>
         <Sidebar {...sidebar} />
         {children}

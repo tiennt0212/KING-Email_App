@@ -11,6 +11,7 @@ const EmailPreviewPanel = ({ emailList, onSelectEmail, ...props }) => {
       {emailList.map(
         ({ senderAvt, senderName, cardTitle, time, cardContent }) => (
           <EmailPreview
+            key={`${senderName}-${time}`}
             senderAvt={senderAvt}
             senderName={senderName}
             cardTitle={cardTitle}
