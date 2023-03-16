@@ -4,14 +4,11 @@ class SbtUserService {
   constructor() {
     this.contractAddress = SCORE.SBT_USER;
   }
-  log(a) {
-    console.log(a);
-  }
   async getUser({ address }) {
     return await read({
       from: address,
       methodName: "getUser",
-      scoreAddress: this.contractAddress,
+      scoreAddress: SCORE.SBT_USER,
       params: {
         _address: address,
       },

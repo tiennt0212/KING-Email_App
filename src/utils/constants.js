@@ -22,7 +22,7 @@ export const LISBON = {
 };
 export const STEP = {
   MIN: 3178800, // about 3.2 million
-  MEDIUM: 1100000000, // about 1.1 billion, for deployment
+  MEDIUM: "1100000000", // about 1.1 billion, for deployment
   MAX: 2500000000, //2.5 billion
 };
 

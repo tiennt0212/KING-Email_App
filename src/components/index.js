@@ -8,7 +8,7 @@ import { EmailPreview, EmailView } from "./Email";
 import AddressShorten from "./Address";
 
 import Modal from "./Modal/Modal";
-
+import { RegisterSBT } from "./Form";
 export {
   Input,
   Button,
@@ -18,4 +18,5 @@ export {
   EmailView,
   AddressShorten,
   Modal,
+  RegisterSBT,
 };

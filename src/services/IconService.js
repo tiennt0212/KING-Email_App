@@ -3,10 +3,10 @@
 // Ref icon-sdk-js doc: https://github.com/icon-project/icon-sdk-js
 // Ref ICON Dev Portal doc: https://docs.icon.community/icon-stack/client-apis/javascript-sdk/examples
 import IconService from "icon-sdk-js";
-// import HttpProvider from "icon-sdk-js/build/transport/http/HttpProvider";
 import { LISBON, STEP } from "utils/constants";
 
-const { HttpProvider, IconConverter } = IconService;
+const { HttpProvider, IconConverter, SignedTransaction, IconWallet } =
+  IconService;
 const { CallBuilder, CallTransactionBuilder } = IconService.IconBuilder;
 
 const httpProvider = new HttpProvider(LISBON.RPC);
@@ -38,6 +38,8 @@ const traceTransaction = async (txHash) => {
 };
 
 const dispatchEvent = (type, payload) => {
+  console.log("type", type);
+  console.log("payload", payload);
   const customEvent = new CustomEvent("ICONEX_RELAY_REQUEST", {
     detail: {
       type,
@@ -77,10 +79,50 @@ const callTX = async ({
   const tx = callTransactionBuilder
     .from(from)
     .to(scoreAddress)
+    .stepLimit(IconConverter.toBigNumber(stepLimit || STEP.MEDIUM))
     .method(methodName)
-    .params({ ...params }.stepLimit(stepLimit || STEP.MEDIUM))
+    .params({ ...params })
+    .timestamp(new Date().getTime() * 1000)
     .build();
-  return await iconService.call(tx).execute();
+  const rawTx = IconConverter.toRawTransaction(tx);
+  const txPayload = {
+    jsonrpc: "2.0",
+    method: "icx_sendTransaction",
+    params: rawTx,
+    id: 50889,
+  };
+  return await signTransaction(txPayload);
+};
+
+const signTransaction = (transaction) => {
+  return new Promise((resolve, reject) => {
+    dispatchEvent("REQUEST_JSON-RPC", transaction);
+
+    window.addEventListener(
+      "ICONEX_RELAY_RESPONSE",
+      function async(event) {
+        const type = event.detail.type;
+        const payload = event.detail.payload;
+        if (type === "RESPONSE_JSON-RPC") {
+          console.log("Done");
+          resolve(payload);
+        }
+        if (type === "CANCEL_JSON-RPC") {
+          console.log("Cancel");
+          reject();
+        }
+      },
+      { once: true }
+    );
+  });
+};
+
+const getTxResult = async (txHash) => {
+  return await iconService.getTransactionResult(txHash).execute();
+};
+
+const waitTransactionResult = async (txHash) => {
+  return await iconService.waitTransactionResult(txHash).execute();
 };
 
 const read = async ({ from, scoreAddress, methodName, params }) => {
@@ -94,4 +136,12 @@ const read = async ({ from, scoreAddress, methodName, params }) => {
     .build();
   return await iconService.call(tx).execute();
 };
-export { dispatchEvent, handleEvent, getWallet, read, callTX };
+export {
+  dispatchEvent,
+  handleEvent,
+  getWallet,
+  read,
+  callTX,
+  getTxResult,
+  waitTransactionResult,
+};

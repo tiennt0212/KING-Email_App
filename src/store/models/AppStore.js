@@ -4,6 +4,7 @@ const initialState = {
     title: null,
     message: null,
     type: null,
+    closeable: false,
   },
   notification: { visible: false, message: "I'm notification" },
 };
@@ -25,12 +26,14 @@ const AppStore = {
     },
   },
   effects: (dispatch) => ({
-    openModal({ title, message, type }) {
+    openModal({ title, message, type, children, closeable }) {
       this.setModal({
         visible: true,
         title,
         message,
         type,
+        children,
+        closeable,
       });
     },
     closeModal() {

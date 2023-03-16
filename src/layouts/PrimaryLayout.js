@@ -19,19 +19,21 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
     modal: AppStore.modal,
   }));
 
-  const { getWallet, authenticate, closeModal } = useDispatch(({ User, AppStore }) => ({
-    getWallet: User.getWallet,
-    authenticate: User.authenticate,
-    closeModal: AppStore.closeModal,
-  }));
+  const { getWallet, authenticate, logout, closeModal } = useDispatch(
+    ({ User, AppStore }) => ({
+      getWallet: User.getWallet,
+      authenticate: User.authenticate,
+      logout: User.logout,
+      closeModal: AppStore.closeModal,
+    })
+  );
 
   const { isLoggedIn } = useStore(({ User }) => ({
     isLoggedIn: User.isLoggedIn,
   }));
 
   useEffect(() => {
-    // console.log("useEffect", authenticate, wallet.address)
-    authenticate({ address: wallet.address });
+    if (isLoggedIn) authenticate({ address: wallet.address });
   }, [isLoggedIn]);
   return (
     <PrimaryLayoutStyled>
@@ -39,7 +41,9 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
         isLoggedIn={isLoggedIn}
         userAvt={info?.avatar}
         userAddr={wallet?.address}
+        userNickname={info?.name}
         onConnectWallet={getWallet}
+        logoutHandler={logout}
       />
       <ContentStyled>
         <Sidebar {...sidebar} />

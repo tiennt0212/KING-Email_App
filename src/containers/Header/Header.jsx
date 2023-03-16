@@ -14,6 +14,7 @@ import { BREAKPOINTS, ROUTES } from "utils/constants";
 // import letter1 from "assets/images/letter1.gif";
 import colors from "styles/colors";
 import icWallet from "assets/images/ic-wallet.png";
+import icLogout from "assets/images/ic-logout.png";
 
 const { tealGreen, lightGray } = colors;
 const HeaderStyled = styled.header`
@@ -115,9 +116,13 @@ const UserUtilitiesStyled = styled.div`
     align-items: center;
     p {
       margin-right: 1.2rem;
+      // CSS for user name
+      font-size: 1.6rem;
+      font-weight: bold;
     }
     .user-avatar {
       box-shadow: rgba(0, 0, 0, 0.35) 0px 4px 8px;
+      margin-right: 1.2rem;
     }
   }
 `;
@@ -126,7 +131,9 @@ const Header = ({
   isLoggedIn,
   userAvt,
   userAddr,
+  userNickname,
   onConnectWallet,
+  logoutHandler,
   ...rest
 }) => {
   return (
@@ -164,8 +171,18 @@ const Header = ({
         <UserUtilitiesStyled>
           {isLoggedIn ? (
             <div className="logged_in-user">
-              <AddressShorten address={userAddr} />
+              {userNickname ? (
+                <p>{userNickname}</p>
+              ) : (
+                <AddressShorten address={userAddr} />
+              )}
               <Avatar src={userAvt} size="large" className="user-avatar" />
+              <Button
+                icon={icLogout}
+                type={"link"}
+                size="large"
+                onClick={() => logoutHandler()}
+              />
             </div>
           ) : (
             <div className="guest-user">
