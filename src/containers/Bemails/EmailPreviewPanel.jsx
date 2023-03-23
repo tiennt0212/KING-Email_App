@@ -18,25 +18,11 @@ const EmailPreviewPanel = ({
   return (
     <EmailPreviewPanelStyled>
       {emailList?.map((email, index) => {
-        const {
-          senderAvt,
-          sender,
-          title,
-          time,
-          content,
-          id,
-          senderInfo,
-          receiverInfo,
-        } = email;
+        const { sender, title, content, id, senderInfo, receiverInfo } = email;
         return (
           <EmailPreview
             key={`${sender}-${id}`}
-            // senderAvt={senderAvt}
-            // senderName={sender}
-            senderInfo={senderInfo || receiverInfo}
-            cardTitle={title}
-            // time={time}
-            cardContent={content}
+            {...email}
             onSelectEmail={() => selectEmail({ ...email, index })}
           />
         );

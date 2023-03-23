@@ -44,6 +44,15 @@ const EmailPreviewStyled = styled.div`
     display: flex;
     justify-content: space-between;
   }
+  .email-body {
+    display: flex;
+    img {
+      height: 10rem;
+      width: 10rem;
+      object-fit: contain;
+      margin-left: 2rem;
+    }
+  }
   .btn-change-state {
     font-size: 1.4rem;
     color: ${darkGray};
@@ -66,21 +75,23 @@ const EmailPreviewStyled = styled.div`
 `;
 
 const EmailPreview = ({
-  senderAvt,
-  senderName,
-  cardTitle,
-  cardContent,
-  time,
-  hasBookmark,
-  className,
+  sender,
+  receiver,
+  title,
+  content,
+  id,
+  image,
   senderInfo,
+  receiverInfo,
+  className,
+  hasBookmark,
   onSelectEmail,
   ...rest
 }) => {
   return (
     <EmailPreviewStyled className={className} onClick={() => onSelectEmail()}>
       <div className="email-header">
-        <UserInfo {...senderInfo} />
+        <UserInfo {...(senderInfo || receiverInfo)} />
         <Button
           className="btn-change-state"
           text="Mark as read"
@@ -101,10 +112,11 @@ const EmailPreview = ({
           }
         />
       </div>
-      <h3>
-        {cardTitle} - <span className="sender-name">{senderName}</span>
-      </h3>
-      <p className="card-content limit-text-line">{cardContent}</p>
+      <h3>{title}</h3>
+      <div className="email-body">
+        <p className="card-content limit-text-line">{content}</p>
+        <img src={image} alt="stamp" />
+      </div>
     </EmailPreviewStyled>
   );
 };

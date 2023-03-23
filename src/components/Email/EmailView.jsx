@@ -42,10 +42,21 @@ const EmailViewStyled = styled.div`
   overflow: auto;
   /* overflow: ; */
   .card-content {
+    margin-top: 2rem;
     background-color: ${lightGray};
     padding: 2.4rem;
     border-radius: 0.8rem;
     flex-grow: 1;
+  }
+  .email-header {
+    display: flex;
+    justify-content: space-between;
+    > img {
+      height: 8rem;
+      width: 8rem;
+      object-fit: contain;
+      margin-left: 2rem;
+    }
   }
   .btn-bookmark {
     &:not(:hover) {
@@ -78,6 +89,7 @@ const EmailView = ({
   title,
   content,
   time,
+  image,
   hasBookmark,
   className,
   senderInfo,
@@ -113,14 +125,11 @@ const EmailView = ({
       <EmailViewStyled>
         {title && content ? (
           <>
-            <UserInfo {...(senderInfo || receiverInfo)} avtSize="large" />
-            <p className="timestamp">{time}</p>
-            <Button
-              className="btn-bookmark"
-              type="link"
-              size="large"
-              icon={hasBookmark ? icBookmarkFilled : icBookmark}
-            />
+            <div className="email-header">
+              <UserInfo {...(senderInfo || receiverInfo)} avtSize="large" />
+              <img src={image} alt="stamp" />
+            </div>
+
             <h2 className="card-title">{title}</h2>
             <p className="card-content">{content}</p>
           </>
