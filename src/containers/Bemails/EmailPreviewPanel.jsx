@@ -3,16 +3,22 @@ import styled from "styled-components";
 import { EmailPreview } from "components";
 import { InkBallLoading } from "components";
 const EmailPreviewPanelStyled = styled.div`
-  min-width: 40rem;
-  max-width: 57rem;
+  /* min-width: 40rem; */
+  width: 100%;
   overflow-y: auto;
 `;
-const EmailPreviewPanel = ({ emailList, onSelectEmail, loading, ...props }) => {
+const EmailPreviewPanel = ({
+  emailList,
+  onSelectEmail,
+  loading,
+  selectEmail,
+  ...props
+}) => {
   console.log("received emailList: ", emailList);
   return (
     <EmailPreviewPanelStyled>
-      {emailList?.map(
-        ({
+      {emailList?.map((email, index) => {
+        const {
           senderAvt,
           sender,
           title,
@@ -21,7 +27,8 @@ const EmailPreviewPanel = ({ emailList, onSelectEmail, loading, ...props }) => {
           id,
           senderInfo,
           receiverInfo,
-        }) => (
+        } = email;
+        return (
           <EmailPreview
             key={`${sender}-${id}`}
             // senderAvt={senderAvt}
@@ -30,9 +37,10 @@ const EmailPreviewPanel = ({ emailList, onSelectEmail, loading, ...props }) => {
             cardTitle={title}
             // time={time}
             cardContent={content}
+            onSelectEmail={() => selectEmail({ ...email, index })}
           />
-        )
-      )}
+        );
+      })}
     </EmailPreviewPanelStyled>
   );
 };

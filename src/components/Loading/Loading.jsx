@@ -5,6 +5,7 @@ import gifInkDiscover from "assets/images/ink-discover.gif";
 const LoadingStyled = styled.div`
   width: 100%;
   img {
+    width: inherit;
   }
 `;
 const InkBallLoading = () => {

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   Button,
@@ -18,10 +18,10 @@ const EmailLayout = styled.div`
   display: flex;
   > .left-side {
     border-right: solid 0.2rem ${colors.lightGray};
-    flex-grow: 1;
+    width: 50%;
   }
   > .right-side {
-    flex-grow: 2;
+    width: 50%;
   }
   @media (max-width: ${BREAKPOINTS.LG}) {
   }
@@ -30,6 +30,7 @@ const EmailLayout = styled.div`
 const Bemails = () => {
   const location = useLocation();
   const isReceivedEmailPage = location.pathname === ROUTES.MAILS;
+  const [selectedEmail, setSelectedEmail] = useState(null);
   const { receivedEmail, sentEmail, loadingGetReceivedEmail } = useSelector(
     ({ StampStore, loading }) => ({
       receivedEmail: StampStore.personal.received,
@@ -59,58 +60,24 @@ const Bemails = () => {
       if (isReceivedEmailPage) getReceivedEmail();
       else getSentEmail();
     }
+    setSelectedEmail(null);
   }, [getReceivedEmail, location]);
-  // const exampleEmailList = [
-  //   {
-  //     senderAvt:
-  //       "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
-  //     senderName: "Tien Nguyen",
-  //     cardTitle: "Hello World",
-  //     time: "25-Feb-2023",
-  //     cardContent:
-  //       "Lorem ipsum ipsim... I first want to apologize that we haven’t been able to connect recently. I feel like somewhere along the way I must have made it difficult to communicate",
-  //   },
-  //   {
-  //     senderAvt:
-  //       "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
-  //     senderName: "Tien Nguyen",
-  //     cardTitle: "Hello World",
-  //     time: "26-Feb-2023",
-  //     cardContent:
-  //       "Lorem ipsum ipsim... I first want to apologize that we haven’t been able to connect recently. I feel like somewhere along the way I must have made it difficult to communicate",
-  //   },
-  //   {
-  //     senderAvt:
-  //       "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg",
-  //     senderName: "Tien Nguyen",
-  //     cardTitle: "Hello World",
-  //     time: "27-Feb-2023",
-  //     cardContent:
-  //       "Lorem ipsum ipsim... I first want to apologize that we haven’t been able to connect recently. I feel like somewhere along the way I must have made it difficult to communicate",
-  //   },
-  // ];
+
+  const emailPanelInput = isReceivedEmailPage ? receivedEmail : sentEmail;
+
   return (
     <Suspense fallback={<InkBallLoading />}>
       <EmailLayout>
         <div className="left-side">
           <EmailPreviewPanel
-            emailList={isReceivedEmailPage ? receivedEmail : sentEmail}
+            emailList={emailPanelInput}
             loading={loadingGetReceivedEmail}
+            selectEmail={setSelectedEmail}
           />
           {/* <EmailPreviewPanel emailList={exampleEmailList} /> */}
         </div>
         <div className="right-side">
-          <EmailView
-            senderAvt={
-              "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg"
-            }
-            senderName=" Tien Nguyen Tien Nguyen"
-            cardTitle={"Hello World"}
-            time={"26-Feb-2023"}
-            cardContent={
-              "Lorem ipsum ipsim... I first want to apologize that we haven’t been able to connect recently. I feel like somewhere along the way I must have made it difficult to communicate"
-            }
-          />
+          <EmailView {...selectedEmail} />
         </div>
       </EmailLayout>
     </Suspense>

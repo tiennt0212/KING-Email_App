@@ -2,9 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import Avatar from "components/Avatar";
 import { Button } from "components/origin";
+import UserInfo from "components/UserInfo";
 import colors from "styles/colors";
 import icBookmark from "assets/images/ic-bookmark.svg";
 import icBookmarkFilled from "assets/images/ic-bookmark-filled.svg";
+import { InkBallLoading } from "components/Loading";
 
 const { lightGray } = colors;
 
@@ -29,6 +31,7 @@ const TopUtilityStyled = styled.div`
   }
 `;
 const EmailViewStyled = styled.div`
+  flex-grow: 1;
   border-bottom: solid 0.2rem ${lightGray};
   padding: 4rem 3.2rem;
   font-size: 1.6rem;
@@ -51,6 +54,17 @@ const EmailViewStyled = styled.div`
     }
   }
 `;
+
+const NoSelectedStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* height: 100%; */
+  img {
+    margin-top: 2rem;
+  }
+`;
 const BottomUtilityStyled = styled.div`
   display: flex;
   justify-content: space-between;
@@ -61,46 +75,84 @@ const BottomUtilityStyled = styled.div`
 `;
 
 const EmailView = ({
-  senderAvt,
-  senderName,
-  cardTitle,
-  cardContent,
+  title,
+  content,
   time,
   hasBookmark,
   className,
+  senderInfo,
+  receiverInfo,
   ...props
 }) => {
   return (
     <Wrapper>
       <TopUtilityStyled>
         <div className="left-side">
-          <Button text="Back" type="transparent" />
+          <Button
+            text="Previous"
+            type="transparent"
+            onClick={() =>
+              alert(
+                "Thanks for your using. Please use it later! It will be implemented in the next time"
+              )
+            }
+          />
         </div>
         <div className="right-side">
-          <Button text="Example Tag 1" type="transparent" />
-          <Button text="Example Tag 2" type="transparent" />
+          <Button
+            text="Next"
+            type="transparent"
+            onClick={() =>
+              alert(
+                "Thanks for your using. Please use it later! It will be implemented in the next time"
+              )
+            }
+          />
         </div>
       </TopUtilityStyled>
       <EmailViewStyled>
-        <Avatar src={senderAvt} alt="sender-avt" size="large" />
-        <h4 className="sender-name">{senderName}</h4>
-        <p className="timestamp">{time}</p>
-        <Button
-          className="btn-bookmark"
-          type="link"
-          size="large"
-          icon={hasBookmark ? icBookmarkFilled : icBookmark}
-        />
-        <h2 className="card-title">{cardTitle}</h2>
-        <p className="card-content">{cardContent}</p>
+        {title && content ? (
+          <>
+            <UserInfo {...(senderInfo || receiverInfo)} avtSize="large" />
+            <p className="timestamp">{time}</p>
+            <Button
+              className="btn-bookmark"
+              type="link"
+              size="large"
+              icon={hasBookmark ? icBookmarkFilled : icBookmark}
+            />
+            <h2 className="card-title">{title}</h2>
+            <p className="card-content">{content}</p>
+          </>
+        ) : (
+          <NoSelectedStyled>
+            <InkBallLoading />
+            <h2>No Email was selected yet</h2>
+          </NoSelectedStyled>
+        )}
       </EmailViewStyled>
       <BottomUtilityStyled>
         <div className="left-side">
-          <Button text="Back" type="transparent" />
+          <Button
+            text="Archived"
+            type="transparent"
+            onClick={() =>
+              alert(
+                "Thanks for your using. Please use it later! It will be implemented in the next time"
+              )
+            }
+          />
         </div>
         <div className="right-side">
-          <Button text="Example Tag 1" type="transparent" />
-          <Button text="Example Tag 2" type="transparent" />
+          <Button
+            text="Reply"
+            type="primary"
+            onClick={() =>
+              alert(
+                "Thanks for your using. Please use it later! It will be implemented in the next time"
+              )
+            }
+          />
         </div>
       </BottomUtilityStyled>
     </Wrapper>
