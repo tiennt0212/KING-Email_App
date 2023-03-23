@@ -17,13 +17,21 @@ function App() {
           <PrimaryLayout>
             <Routes>
               <Route path={ROUTES.HOME} element={<WorldOfStamps />} />
-              <Route path={ROUTES.B_EMAILS} element={<Bemails />} />
-              <Route path={ROUTES.B_EMAIL_COMPOSE} element={<Bemails />} />
-              <Route path={ROUTES.BOOKMARKS} element={<Bemails />} />
               <Route
                 path={ROUTES.WORLD_OF_STAMPS}
                 element={<WorldOfStamps />}
               />
+              <Route
+                path={ROUTES.WORLD_OF_STAMPS_DISCOVER}
+                element={<WorldOfStamps />}
+              />
+              <Route
+                path={ROUTES.WORLD_OF_STAMPS_ME}
+                element={<WorldOfStamps />}
+              />
+              <Route path={ROUTES.MAILS} element={<Bemails />} />
+              <Route path={ROUTES.EMAIL_COMPOSE} element={<Bemails />} />
+              <Route path={ROUTES.BOOKMARKS} element={<Bemails />} />
               <Route path={ROUTES.SETTINGS} element={<Bemails />} />
             </Routes>
           </PrimaryLayout>

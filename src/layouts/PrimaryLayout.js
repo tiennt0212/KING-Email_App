@@ -47,11 +47,13 @@ const ContentStyled = styled.div`
 
 const PrimaryLayout = ({ children, sidebar, ...rest }) => {
   const location = useLocation();
-  const theme = [ROUTES.WORLD_OF_STAMPS, ROUTES.HOME].includes(
-    location.pathname
-  )
-    ? WATER_THEME
-    : PAPER_THEME;
+  const isStampPage = [
+    ROUTES.WORLD_OF_STAMPS,
+    ROUTES.WORLD_OF_STAMPS_DISCOVER,
+    ROUTES.WORLD_OF_STAMPS_ME,
+    ROUTES.HOME,
+  ].includes(location.pathname);
+  const theme = isStampPage ? WATER_THEME : PAPER_THEME;
 
   const { wallet, info, modal } = useSelector(({ UserStore, AppStore }) => ({
     wallet: UserStore.wallet,
@@ -83,8 +85,13 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
   //
 
   const manageEmailItems = [
-    { icon: icPlane, route: ROUTES.B_EMAILS, name: "All mail" },
-    { icon: icPaper, route: ROUTES.B_EMAIL_COMPOSE, name: "New Compose" },
+    { icon: icPlane, route: ROUTES.MAILS, name: "All mail" },
+    { icon: icPaper, route: ROUTES.EMAIL_COMPOSE, name: "New Compose" },
+  ];
+
+  const manageStampItems = [
+    { icon: icPlane, route: ROUTES.WORLD_OF_STAMPS_DISCOVER, name: "Discover" },
+    { icon: icPaper, route: ROUTES.WORLD_OF_STAMPS_ME, name: "My Stamps" },
   ];
 
   const personalizeItems = [
@@ -92,17 +99,7 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
   ];
 
   return (
-    // <Suspense
-    //   fallback={
-    //     location.pathname === ROUTES.WORLD_OF_STAMPS ? (
-    //       <DiscoverLoading />
-    //     ) : (
-    //       <InkBallLoading />
-    //     )
-    //   }
-    // >
     <ThemeProvider theme={theme}>
-      {/* <InkBallLoading /> */}
       <PrimaryLayoutStyled>
         {theme.name === WATER_THEME.name && (
           <VideoBackgroundStyled>
@@ -123,7 +120,7 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
         />
         <ContentStyled>
           <Sidebar
-            topUtilities={manageEmailItems}
+            topUtilities={isStampPage ? manageStampItems : manageEmailItems}
             botUtilities={personalizeItems}
           />
           {children}
@@ -131,7 +128,6 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
         <Modal {...modal} onCloseModal={closeModal} />
       </PrimaryLayoutStyled>
     </ThemeProvider>
-    // </Suspense>
   );
 };
 

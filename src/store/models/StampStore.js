@@ -150,6 +150,57 @@ const StampStore = {
         });
       }
     },
+    async getMyStamp() {
+      try {
+        const res = await StampService.getUserStamp({
+          address: localStorage.getItem("address"),
+          expired: IconConverter.toHex(0),
+        });
+        const handleStampData = async (stamps) => {
+          let a;
+          if (stamps[stamps.length - 2] === ",") {
+            console.log("RIGHT");
+            a = stamps.replace(/},]/i, "}]");
+          }
+
+          // Parse from String to Array of Objects
+          const parsed = JSON.parse(a);
+
+          // Convert null, boolean values
+          const converted = parsed.map((stamp) => {
+            for (const key in stamp) {
+              if (stamp[key] === "null") stamp[key] = null;
+              if (stamp[key] === "false") stamp[key] = false;
+              if (stamp[key] === "true") stamp[key] = true;
+            }
+            return stamp;
+          });
+
+          // Get Creator data
+          const setOfCreator = new Set(converted.map((stamp) => stamp.creator));
+          for (const creatorAddress of setOfCreator.values()) {
+            console.log(creatorAddress);
+            const creatorInfo = await dispatch.UserStore.getUser(
+              creatorAddress
+            );
+            converted.forEach((element) => {
+              if ((element.creator = creatorAddress))
+                element.creatorInfo = creatorInfo;
+            });
+          }
+          return converted;
+        };
+        const handledData = await handleStampData(res);
+        this.setPersonalCollected(handledData);
+      } catch (error) {
+        console.log(error);
+        dispatch.AppStore.openModal({
+          title: "Something went wrong~~",
+          message: error.message,
+          closeable: true,
+        });
+      }
+    },
     // Debug
     // async getStamp() {
     //   try {

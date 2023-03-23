@@ -1,9 +1,11 @@
 export const ROUTES = {
   HOME: "/",
-  B_EMAILS: "/mails",
-  B_EMAIL_COMPOSE: "/mails/compose",
+  MAILS: "/mails",
+  EMAIL_COMPOSE: "/mails/compose/:stampId",
   BOOKMARKS: "/bookmarks",
   WORLD_OF_STAMPS: "/world-of-stamps",
+  WORLD_OF_STAMPS_DISCOVER: "/world-of-stamps/discover",
+  WORLD_OF_STAMPS_ME: "/world-of-stamps/me",
   SETTINGS: "/settings",
 };
 

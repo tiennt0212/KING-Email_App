@@ -60,7 +60,9 @@ const StampPreview = (props) => {
     content,
     expired,
     creatorInfo,
-    onBuyStamp,
+    stampAction,
+    buttonIcon,
+    buttonText,
   } = props;
   const displayable = !(sender || receiver || title || content || expired);
   if (!displayable) {
@@ -74,10 +76,10 @@ const StampPreview = (props) => {
           <p>Created By</p>
           <UserInfo {...creatorInfo} className="user-info" />
           <Button
-            text={"BUY"}
+            text={buttonText}
             type="primary"
-            icon={icDollarCoin}
-            onClick={onBuyStamp}
+            icon={buttonIcon}
+            onClick={() => stampAction()}
           />
         </div>
       </StampPreviewStyled>
