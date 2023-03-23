@@ -46,7 +46,7 @@ const SidebarStyled = styled.aside`
     border: solid 0.8rem transparent;
     &:has(a.active) {
       border-left-color: ${tealGreen};
-      background-color: ${(props) => props.theme.subColor2};
+      background-color: ${(props) => props.theme.bgColor};
     }
     a {
       text-decoration: none;

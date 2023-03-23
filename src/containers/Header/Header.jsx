@@ -148,16 +148,16 @@ const Header = ({
         <NavStyled>
           <ul>
             <li>
-              <NavLink to={ROUTES.B_EMAILS}>
+              <NavLink to={ROUTES.WORLD_OF_STAMPS}>
                 <div className="nav-item">
-                  <p>Bemails</p>
+                  <p>World of Stamps</p>
                 </div>
               </NavLink>
             </li>
             <li>
-              <NavLink to={ROUTES.WORLD_OF_STAMPS} end>
+              <NavLink to={ROUTES.MAILS}>
                 <div className="nav-item">
-                  <p>Stamp World</p>
+                  <p>Mails</p>
                 </div>
               </NavLink>
             </li>
