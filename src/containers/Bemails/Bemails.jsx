@@ -14,6 +14,8 @@ import { BREAKPOINTS, ROUTES } from "utils/constants";
 import mail from "assets/images/mail.png";
 import { handleEvent, getWallet } from "services/IconService";
 import { useLocation } from "react-router-dom";
+import gifInkDiscover from "assets/images/ink-discover.gif";
+
 const EmailLayout = styled.div`
   display: flex;
   width: 100%;
@@ -27,6 +29,38 @@ const EmailLayout = styled.div`
     flex-grow: 1;
   }
   @media (max-width: ${BREAKPOINTS.LG}) {
+  }
+`;
+
+const OverlayStyled = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  /* height: 100vh; */
+  /* width: inherit; */
+  background-image: url(${gifInkDiscover});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  animation: fadeOut 3s;
+  animation-fill-mode: forwards;
+
+  @keyframes fadeOut {
+    30% {
+      opacity: 1;
+    }
+    99% {
+      opacity: 0.01;
+      width: 100%;
+      height: 100%;
+    }
+    100% {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
   }
 `;
 
@@ -99,6 +133,7 @@ const Bemails = () => {
           <EmailView {...selectedEmail} />
         </div>
       </EmailLayout>
+      <OverlayStyled />
     </Suspense>
   );
 };

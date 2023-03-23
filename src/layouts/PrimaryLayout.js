@@ -31,7 +31,7 @@ const VideoBackgroundStyled = styled.div`
     height: 100vh;
   }
   .overlay {
-    background-color: rgba(0, 0, 0, 0.6); // Fixed overlay color for video
+    background-color: rgba(0, 0, 0, 0.4); // Fixed overlay color for video
     width: 100%;
     height: 100%;
     position: absolute;
