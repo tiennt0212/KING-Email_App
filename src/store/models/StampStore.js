@@ -4,14 +4,14 @@
 //   getTxResult,
 //   waitTransactionResult,
 // } from "services/IconService";
-// import { SCORE } from "utils/constants";
+import { ROUTES } from "utils/constants";
 // import SbtUserService from "services/SbtUserService";
 import StampService from "services/StampService";
 // import { RegisterSBT } from "components";
 // import { delay } from "utils/functions";
 import { IconConverter } from "services/IconService";
 import { delay } from "utils/functions";
-
+import { Button } from "components";
 const initialState = {
   worldWide: [], // all of unminted stamps
   personal: {
@@ -152,17 +152,20 @@ const StampStore = {
     },
     async getMyStamp() {
       try {
+        const address = localStorage.getItem("address");
+        if (!address) throw Error("You have to connect wallet first");
         const res = await StampService.getUserStamp({
           address: localStorage.getItem("address"),
           expired: IconConverter.toHex(0),
         });
+        console.log(res);
         const handleStampData = async (stamps) => {
-          let a;
+          // Remove the last comma
+          let a = stamps;
           if (stamps[stamps.length - 2] === ",") {
             console.log("RIGHT");
             a = stamps.replace(/},]/i, "}]");
           }
-
           // Parse from String to Array of Objects
           const parsed = JSON.parse(a);
 
@@ -192,6 +195,21 @@ const StampStore = {
         };
         const handledData = await handleStampData(res);
         this.setPersonalCollected(handledData);
+        if (handledData.length === 0) {
+          dispatch.AppStore.openModal({
+            title: "Oooopppppppppsssss!",
+            message: "No stamp here! Let's buy from Discover Stamps",
+            children: (
+              <Button
+                text="Go to Discover Page"
+                type="transparent"
+                onClick={() =>
+                  window.location.assign(ROUTES.WORLD_OF_STAMPS_DISCOVER)
+                }
+              />
+            ),
+          });
+        }
       } catch (error) {
         console.log(error);
         dispatch.AppStore.openModal({
