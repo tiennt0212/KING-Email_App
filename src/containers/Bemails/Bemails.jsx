@@ -23,6 +23,7 @@ const EmailLayout = styled.div`
     border-right: solid 0.2rem ${colors.lightGray};
     width: 50%;
     flex-grow: 1;
+    overflow-y: auto;
   }
   > .right-side {
     width: 50%;
@@ -114,7 +115,7 @@ const Bemails = () => {
       });
     }
     setSelectedEmail(null);
-  }, [getReceivedEmail, location]);
+  }, [getReceivedEmail, getSentEmail, location, isLoggedIn]);
 
   const emailPanelInput = isReceivedEmailPage ? receivedEmail : sentEmail;
 
