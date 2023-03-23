@@ -5,12 +5,11 @@
 import IconService from "icon-sdk-js";
 import { LISBON, STEP } from "utils/constants";
 
-const { HttpProvider, IconConverter } = IconService;
+const { HttpProvider, IconConverter, IconValidator } = IconService;
 const { CallBuilder, CallTransactionBuilder } = IconService.IconBuilder;
 
 const httpProvider = new HttpProvider(LISBON.RPC);
 const iconService = new IconService(httpProvider);
-
 // const getTotalSupply = async () => {
 //   return await iconService.getTotalSupply().execute();
 // };
@@ -137,6 +136,7 @@ const read = async ({ from, scoreAddress, methodName, params }) => {
 };
 export {
   IconConverter,
+  IconValidator,
   dispatchEvent,
   handleEvent,
   getWallet,
