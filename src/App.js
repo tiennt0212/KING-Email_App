@@ -16,7 +16,7 @@ function App() {
         <BrowserRouter>
           <PrimaryLayout>
             <Routes>
-              <Route path={ROUTES.HOME} element={<Bemails />} />
+              <Route path={ROUTES.HOME} element={<WorldOfStamps />} />
               <Route path={ROUTES.B_EMAILS} element={<Bemails />} />
               <Route path={ROUTES.B_EMAIL_COMPOSE} element={<Bemails />} />
               <Route path={ROUTES.BOOKMARKS} element={<Bemails />} />

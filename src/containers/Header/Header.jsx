@@ -156,7 +156,7 @@ const Header = ({
             <li>
               <NavLink to={ROUTES.B_EMAILS}>
                 <div className="nav-item">
-                  <p>Postcards</p>
+                  <p>Bemails</p>
                 </div>
               </NavLink>
             </li>

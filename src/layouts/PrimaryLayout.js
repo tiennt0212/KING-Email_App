@@ -47,8 +47,11 @@ const ContentStyled = styled.div`
 
 const PrimaryLayout = ({ children, sidebar, ...rest }) => {
   const location = useLocation();
-  const theme =
-    location.pathname === ROUTES.WORLD_OF_STAMPS ? WATER_THEME : PAPER_THEME;
+  const theme = [ROUTES.WORLD_OF_STAMPS, ROUTES.HOME].includes(
+    location.pathname
+  )
+    ? WATER_THEME
+    : PAPER_THEME;
 
   const { wallet, info, modal } = useSelector(({ UserStore, AppStore }) => ({
     wallet: UserStore.wallet,
@@ -81,7 +84,7 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
   //
 
   const manageEmailItems = [
-    { icon: icPlane, route: ROUTES.B_EMAILS, name: "All Postcard" },
+    { icon: icPlane, route: ROUTES.B_EMAILS, name: "All mail" },
     { icon: icPaper, route: ROUTES.B_EMAIL_COMPOSE, name: "New Compose" },
   ];
 
@@ -89,7 +92,6 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
     { icon: icGear, route: ROUTES.SETTINGS, name: "Settings" },
   ];
 
-  console.log(info);
   return (
     // <Suspense
     //   fallback={
