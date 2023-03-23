@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 import { BREAKPOINTS } from "utils/constants";
 import colors from "styles/colors";
 // import icDoubleLeft from "assets/images/ic-double-left.png";
+import logoICON from "assets/images/logo-ICON.png";
+
 import { PAPER_THEME } from "styles/theme";
 const { tealGreen } = colors;
 const SidebarItemStyled = styled.div`
@@ -66,6 +68,16 @@ const SidebarStyled = styled.aside`
       }
     }
   }
+  .logo-ICON {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 6rem;
+      object-fit: contain;
+      margin-bottom: 2rem;
+    }
+  }
 `;
 
 const SidebarItem = ({ icon, name, action, htmlClass }) => {
@@ -109,6 +121,9 @@ const Sidebar = (props) => {
             </li>
           ))}
         </ul>
+        <div className="logo-ICON">
+          <img src={logoICON} alt="ICON-foundation-logo" />
+        </div>
       </div>
     </SidebarStyled>
   );
