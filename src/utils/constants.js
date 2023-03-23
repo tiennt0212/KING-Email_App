@@ -1,7 +1,7 @@
 export const ROUTES = {
   HOME: "/",
-  B_EMAILS: "/postcards",
-  B_EMAIL_COMPOSE: "/postcards/compose",
+  B_EMAILS: "/mails",
+  B_EMAIL_COMPOSE: "/mails/compose",
   BOOKMARKS: "/bookmarks",
   WORLD_OF_STAMPS: "/world-of-stamps",
   SETTINGS: "/settings",

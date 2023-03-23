@@ -12,20 +12,29 @@ const WrapperStyled = styled.div`
   }
   .right-side {
     flex: column no-wrap;
+    p {
+      color: inherit;
+      &.user-name {
+        font-size: 1.6rem;
+        font-weight: bold;
+      }
+      &.user-address {
+        font-size: 1.2rem;
+      }
+    }
   }
 `;
 
 const UserInfo = (props) => {
-  console.log(props);
-  const { address, name, avatar, id } = props;
+  const { address, name, avatar, id, avtSize, ...rest } = props;
   return (
-    <WrapperStyled>
+    <WrapperStyled {...rest}>
       <div className="left-side">
-        <Avatar src={avatar} className="user-avatar" size="large" />
+        <Avatar src={avatar} className="user-avatar" size={avtSize} />
       </div>
       <div className="right-side">
-        <p>{name}</p>
-        <p>
+        <p className="user-name">{name}</p>
+        <p className="user-address">
           {`${address?.substr(0, 4)}...${address?.substr(-4, address.length)}`}
         </p>
       </div>
