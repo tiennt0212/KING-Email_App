@@ -44,7 +44,7 @@ const OverlayStyled = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
-  animation: fadeOut 3s;
+  animation: fadeOut 2s;
   animation-fill-mode: forwards;
 
   @keyframes fadeOut {

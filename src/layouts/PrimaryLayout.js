@@ -12,6 +12,8 @@ import icPlane from "assets/images/ic-plane.png";
 import icPaper from "assets/images/ic-paper.png";
 import icGear from "assets/images/ic-gear.png";
 import icMailbox from "assets/images/ic-mailbox.png";
+import icPersonal from "assets/images/ic-personal.png";
+import gifGlobal from "assets/images/gif-global.gif";
 
 const PrimaryLayoutStyled = styled.div`
   height: 100%;
@@ -88,11 +90,16 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
     { icon: icMailbox, route: ROUTES.MAILS, name: "Received Mails" },
     { icon: icPlane, route: ROUTES.SENT_MAILS, name: "Sent Mails" },
     { icon: icPaper, route: ROUTES.EMAIL_COMPOSE, name: "New Compose" },
+    { icon: icPersonal, route: ROUTES.WORLD_OF_STAMPS_ME, name: "My Stamps" },
   ];
 
   const manageStampItems = [
-    { icon: icPlane, route: ROUTES.WORLD_OF_STAMPS_DISCOVER, name: "Discover" },
-    { icon: icPaper, route: ROUTES.WORLD_OF_STAMPS_ME, name: "My Stamps" },
+    {
+      icon: gifGlobal,
+      route: ROUTES.WORLD_OF_STAMPS_DISCOVER,
+      name: "Discover",
+    },
+    { icon: icPersonal, route: ROUTES.WORLD_OF_STAMPS_ME, name: "My Stamps" },
   ];
 
   const personalizeItems = [
