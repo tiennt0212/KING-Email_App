@@ -18,6 +18,7 @@ const ModalContainerStyled = styled.div`
 const ModalStyled = styled.div`
   position: relative;
   background-color: white;
+  color: black;
   padding: 4rem;
   border-radius: 1.6rem;
   width: 40%;

@@ -114,13 +114,8 @@ const UserUtilitiesStyled = styled.div`
   .logged_in-user {
     display: flex;
     align-items: center;
-    p {
-      color: inherit;
-      margin-right: 1.2rem;
-      font-size: 1.6rem;
-      font-weight: bold;
-    }
     .btn-logout {
+      margin-left: 1.2rem;
       filter: invert(
         ${(props) => (props.theme.name === WATER_THEME.name ? 1 : 0)}
       );
@@ -138,7 +133,6 @@ const Header = ({
   user,
   ...rest
 }) => {
-  console.log(user);
   return (
     <HeaderStyled>
       <div className="left-side">
@@ -174,13 +168,6 @@ const Header = ({
         <UserUtilitiesStyled>
           {isLoggedIn ? (
             <div className="logged_in-user">
-              {/* {userNickname ? (
-                <p>{userNickname}</p>
-              ) : (
-                <AddressShorten address={userAddr} />
-              )} */}
-
-              {/* <Avatar src={userAvt} size="large" className="user-avatar" /> */}
               <UserInfo {...user} />
               <Button
                 icon={icLogout}

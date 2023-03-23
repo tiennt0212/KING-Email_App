@@ -117,7 +117,39 @@ const StampStore = {
         });
       }
     },
-
+    async buyStamp({ stampId }, rootState) {
+      try {
+        const resBuy = await StampService.buyStamp({
+          stampId: stampId,
+        });
+        // console.log(resBuy);
+        // console.log(JSON.parse(resBuy));
+        const txURL = `https://lisbon.tracker.solidwallet.io/transaction/${resBuy?.result}`;
+        console.log("txURL", txURL);
+        this.setWorldWide(
+          rootState.StampStore.worldWide.filter(
+            (stamp) => stamp?.id !== stampId
+          )
+        );
+        dispatch.AppStore.openModal({
+          title: "Buy Stamp successfully!",
+          message: `A new stamp has ID ${stampId} was added to your collection!`,
+          children: (
+            <a href={txURL} target="_blank" style={{ fontSize: "1.6rem" }}>
+              Transaction
+            </a>
+          ),
+          closeable: true,
+        });
+      } catch (error) {
+        console.log(error);
+        dispatch.AppStore.openModal({
+          title: "Something went wrong~~",
+          message: error.message,
+          closeable: true,
+        });
+      }
+    },
     // Debug
     // async getStamp() {
     //   try {

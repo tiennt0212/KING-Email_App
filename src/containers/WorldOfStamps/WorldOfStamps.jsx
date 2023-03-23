@@ -6,22 +6,32 @@ import StampPreview from "./StampPreview";
 const StyledWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  overflow: auto;
 `;
 const WorldOfStamps = (props) => {
   const { worldOfStamps } = useSelector(({ StampStore }) => ({
     worldOfStamps: StampStore.worldWide,
   }));
-  const { getWorldOfStamps } = useDispatch(({ StampStore }) => ({
+
+  const { getWorldOfStamps, buyStamp } = useDispatch(({ StampStore }) => ({
     getWorldOfStamps: StampStore.getWorldOfStamps,
+    buyStamp: StampStore.buyStamp,
   }));
+
   useEffect(() => {
     getWorldOfStamps();
   }, [getWorldOfStamps]);
+
   return (
     <StyledWrapper>
       {worldOfStamps.map((stamp) => {
-        // console.log("stamp", stamp);
-        return <StampPreview {...stamp} key={stamp?.id} />;
+        return (
+          <StampPreview
+            {...stamp}
+            key={stamp?.id}
+            onBuyStamp={() => buyStamp({ stampId: stamp?.id })}
+          />
+        );
       })}
     </StyledWrapper>
   );

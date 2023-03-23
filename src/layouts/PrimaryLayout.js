@@ -74,7 +74,6 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      console.log("logged in");
       authenticate();
     }
   }, [isLoggedIn, wallet.address, authenticate]);
