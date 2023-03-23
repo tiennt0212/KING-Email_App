@@ -61,8 +61,8 @@ const NoSelectedStyled = styled.div`
   align-items: center;
   justify-content: center;
   /* height: 100%; */
-  img {
-    margin-top: 2rem;
+  > div {
+    max-width: 40rem;
   }
 `;
 const BottomUtilityStyled = styled.div`

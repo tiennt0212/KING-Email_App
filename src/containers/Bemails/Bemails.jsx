@@ -16,12 +16,15 @@ import { handleEvent, getWallet } from "services/IconService";
 import { useLocation } from "react-router-dom";
 const EmailLayout = styled.div`
   display: flex;
+  width: 100%;
   > .left-side {
     border-right: solid 0.2rem ${colors.lightGray};
     width: 50%;
+    flex-grow: 1;
   }
   > .right-side {
     width: 50%;
+    flex-grow: 1;
   }
   @media (max-width: ${BREAKPOINTS.LG}) {
   }
@@ -44,12 +47,16 @@ const Bemails = () => {
     getReceivedEmail,
     getSentEmail,
     getStamp,
-  } = useDispatch(({ count, StampStore }) => ({
+    openModal,
+    getWallet,
+  } = useDispatch(({ count, StampStore, AppStore, UserStore }) => ({
     increment: count.increment,
     incrementAsync: count.incrementAsync,
     getReceivedEmail: StampStore.getReceivedEmail,
     getSentEmail: StampStore.getSentEmail,
     getStamp: StampStore.getStamp,
+    openModal: AppStore.openModal,
+    getWallet: UserStore.getWallet,
   }));
   const { isLoggedIn } = useStore(({ UserStore }) => ({
     isLoggedIn: UserStore.isLoggedIn,
@@ -59,6 +66,18 @@ const Bemails = () => {
     if (isLoggedIn) {
       if (isReceivedEmailPage) getReceivedEmail();
       else getSentEmail();
+    } else {
+      openModal({
+        title: "You haven't connected to any wallet",
+        message: "Please connect your wallet before use Mail features",
+        children: (
+          <Button
+            type="transparent"
+            text="Connect Wallet"
+            onClick={() => getWallet()}
+          />
+        ),
+      });
     }
     setSelectedEmail(null);
   }, [getReceivedEmail, location]);

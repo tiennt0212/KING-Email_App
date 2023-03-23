@@ -57,6 +57,7 @@ const UserStore = {
       window.addEventListener("ICONEX_RELAY_RESPONSE", handleResponseAddress, {
         once: true,
       });
+      dispatch.AppStore.closeModal();
     },
     async getUser(address, rootState) {
       if (rootState.UserStore.memoUserInfo.hasOwnProperty(address)) {
