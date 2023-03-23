@@ -41,13 +41,14 @@ class StampService {
       params: {},
     });
   }
-  async getUserStamp({ expired }) {
+  async getUserStamp({ address, expired }) {
     return await read({
       from: localStorage.getItem("address"),
       methodName: "getUserStamp",
       scoreAddress: this.contractAddress,
       params: {
         _expired: expired,
+        _address: address,
       },
     });
   }
@@ -57,6 +58,15 @@ class StampService {
       methodName: "getSentEmail",
       scoreAddress: this.contractAddress,
       params: {},
+    });
+  }
+  // Debug
+  async getStamp({ stampId }) {
+    return await read({
+      from: localStorage.getItem("address"),
+      methodName: "getStamp",
+      scoreAddress: this.contractAddress,
+      params: { _stampId: stampId },
     });
   }
 }

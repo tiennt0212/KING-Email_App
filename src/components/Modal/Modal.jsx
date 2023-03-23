@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
-import colors from "styles/colors";
+// import colors from "styles/colors";
 import { Button } from "components/origin";
 import { useOuterClick } from "hooks";
 
@@ -64,4 +64,4 @@ const Modal = ({
   ) : null;
 };
 
-export default Modal;
+export { Modal, ModalContainerStyled };

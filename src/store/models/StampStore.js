@@ -1,13 +1,15 @@
-import {
-  dispatchEvent,
-  read,
-  getTxResult,
-  waitTransactionResult,
-} from "services/IconService";
-import { SCORE } from "utils/constants";
-import SbtUserService from "services/SbtUserService";
+// import {
+//   dispatchEvent,
+//   read,
+//   getTxResult,
+//   waitTransactionResult,
+// } from "services/IconService";
+// import { SCORE } from "utils/constants";
+// import SbtUserService from "services/SbtUserService";
 import StampService from "services/StampService";
-import { RegisterSBT } from "components";
+// import { RegisterSBT } from "components";
+// import { delay } from "utils/functions";
+import { IconConverter } from "services/IconService";
 import { delay } from "utils/functions";
 
 const initialState = {
@@ -33,7 +35,7 @@ const StampStore = {
       return {
         ...state,
         personal: {
-          ...personal,
+          ...state.personal,
           collected: payload,
         },
       };
@@ -42,7 +44,7 @@ const StampStore = {
       return {
         ...state,
         personal: {
-          ...personal,
+          ...state.personal,
           received: payload,
         },
       };
@@ -58,18 +60,82 @@ const StampStore = {
     async getWorldOfStamps() {
       try {
         const res = await StampService.getWorldOfStamps();
-        console.log(res);
-        console.log(JSON.parse(res));
-        this.setWorldWide(JSON.parse(res));
+        const handleStampData = async (stamps) => {
+          // Parse from String to Array of Objects
+          const parsed = JSON.parse(stamps);
+
+          // Convert null, boolean values
+          const converted = parsed.map((stamp) => {
+            for (const key in stamp) {
+              if (stamp[key] === "null") stamp[key] = null;
+              if (stamp[key] === "false") stamp[key] = false;
+              if (stamp[key] === "true") stamp[key] = true;
+            }
+            return stamp;
+          });
+
+          // Get Creator data
+          const setOfCreator = new Set(converted.map((stamp) => stamp.creator));
+          for (const creatorAddress of setOfCreator.values()) {
+            console.log(creatorAddress);
+            const creatorInfo = await dispatch.UserStore.getUser(
+              creatorAddress
+            );
+            converted.forEach((element) => {
+              if ((element.creator = creatorAddress))
+                element.creatorInfo = creatorInfo;
+            });
+          }
+          return converted;
+        };
+        const handledData = await handleStampData(res);
+        this.setWorldWide(handledData);
       } catch (error) {
         console.log(error);
         dispatch.AppStore.openModal({
           title: "Something went wrong~~",
           message: error.message,
-          children: <RegisterSBT submitFunc={this.registerNickname} />,
+          closeable: true,
         });
       }
     },
+    async getReceivedEmail() {
+      try {
+        const res = await StampService.getUserStamp({
+          expired: IconConverter.toHex(1),
+          address: localStorage.getItem("address"),
+        });
+        console.log(res);
+        console.log(JSON.parse(res));
+        this.setPersonalReceived(JSON.parse(res));
+      } catch (error) {
+        console.log(error);
+        dispatch.AppStore.openModal({
+          title: "Something went wrong~~",
+          message: error.message,
+          closeable: true,
+        });
+      }
+    },
+
+    // Debug
+    // async getStamp() {
+    //   try {
+    //     const res = await StampService.getStamp({
+    //       stampId: IconConverter.toBigNumber(1),
+    //     });
+    //     console.log(res);
+    //     console.log(JSON.parse(res));
+    //     // this.setPersonalReceived(JSON.parse(res));
+    //   } catch (error) {
+    //     console.log(error);
+    //     dispatch.AppStore.openModal({
+    //       title: "Something went wrong~~",
+    //       message: error.message,
+    //       closeable: true,
+    //     });
+    //   }
+    // },
   }),
 };
 

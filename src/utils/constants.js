@@ -28,5 +28,5 @@ export const STEP = {
 
 export const SCORE = {
   SBT_USER: "cx57c71d9ff3c1dcacbf10758f021ee2c61190ef9b",
-  STAMP: "cx2f3c9a708e904415a8e27300521dc5f527234391",
+  STAMP: "cx899530f7541189e2b739f1393d34590556d4078e",
 };

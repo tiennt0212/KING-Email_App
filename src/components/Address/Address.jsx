@@ -6,6 +6,8 @@ const AddressShortenStyled = styled.p`
 `;
 
 const AddressShorten = ({ address, ...rest }) => {
+  // console.log("render shorten of", address);
+  // console.log("...rest", rest);
   return (
     <AddressShortenStyled>
       {`${address.substr(0, 4)}...${address.substr(-4, address.length)}`}
@@ -13,4 +15,5 @@ const AddressShorten = ({ address, ...rest }) => {
   );
 };
 
+// export default React.memo(AddressShorten);
 export default AddressShorten;

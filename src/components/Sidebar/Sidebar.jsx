@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import { Button } from "components/origin";
-import { useDispatch, useSelector } from "hooks";
+// import { Button } from "components/origin";
 import { BREAKPOINTS } from "utils/constants";
 import colors from "styles/colors";
-import icDoubleLeft from "assets/images/ic-double-left.png";
-
-const { tealGreen, lightGray } = colors;
+// import icDoubleLeft from "assets/images/ic-double-left.png";
+import { PAPER_THEME } from "styles/theme";
+const { tealGreen } = colors;
 const SidebarItemStyled = styled.div`
   display: flex;
   align-items: flex-end;
@@ -28,71 +27,15 @@ const SidebarItemStyled = styled.div`
       display: none;
     }
   }
-  &.user-wallet {
-    padding-left: 1.9rem;
-    border-radius: 0.8rem;
-
-    img {
-      width: 3.2rem;
-      height: 3.2rem;
-    }
-    span {
-      margin-left: 0.6rem;
-      line-height: 2.5rem;
-    }
-    &:not(:hover) img {
-      filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(312deg)
-        brightness(90%) contrast(107%);
-    }
-    &:hover {
-      cursor: pointer;
-      img {
-        transform: scale(1.5);
-        transition: transform 0.4s;
-      }
-      span {
-        font-size: 2.4rem;
-        margin-left: 1.2rem;
-        transition: font-size 0.5s;
-        transition: margin-left 0.15s;
-        background: linear-gradient(
-          90deg,
-          rgba(85, 134, 255, 1) 0%,
-          rgba(175, 115, 255, 1) 30%,
-          rgba(210, 193, 255, 1) 70%,
-          rgba(223, 140, 255, 1) 100%
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-    }
-  }
-  &.need-support {
-    img {
-      width: 3.6rem;
-      height: 3.6rem;
-      margin-left: -0.5rem;
-      margin-bottom: -0.5rem;
-    }
-    span {
-      margin-left: 0.5rem;
-    }
-    &:hover {
-      cursor: pointer;
-      color: ${tealGreen};
-      img {
-        filter: invert(35%) sepia(97%) saturate(620%) hue-rotate(132deg)
-          brightness(94%) contrast(104%);
-      }
-    }
-  }
 `;
 const SidebarStyled = styled.aside`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   font-size: 14px;
-  border-right: solid 0.2rem ${lightGray};
+  border-right: solid 0.2rem;
+  border-color: ${({ theme }) =>
+    theme.name === PAPER_THEME.name ? theme.subColor2 : "transparent"};
   overflow-y: auto;
   flex-grow: 0;
   flex-shrink: 0;
@@ -103,14 +46,19 @@ const SidebarStyled = styled.aside`
     border: solid 0.8rem transparent;
     &:has(a.active) {
       border-left-color: ${tealGreen};
-      background-color: ${colors.lightGray};
+      background-color: ${(props) => props.theme.subColor2};
     }
     a {
       text-decoration: none;
-      color: black;
+      color: inherit;
+      img {
+        filter: invert(
+          ${({ theme }) => (theme.name === PAPER_THEME.name ? 0 : 1)}
+        );
+      }
       &.active,
       &:hover {
-        color: ${tealGreen};
+        color: ${(props) => props.theme.primaryColor};
         img {
           filter: invert(35%) sepia(97%) saturate(620%) hue-rotate(132deg)
             brightness(94%) contrast(104%);
@@ -131,9 +79,6 @@ const SidebarItem = ({ icon, name, action, htmlClass }) => {
 
 const Sidebar = (props) => {
   const { topUtilities, botUtilities } = props;
-  const { openModal } = useDispatch(({ AppStore }) => ({
-    openModal: AppStore.openModal,
-  }));
   return (
     <SidebarStyled>
       <div className="top-utilities">
@@ -151,15 +96,6 @@ const Sidebar = (props) => {
       </div>
 
       <div className="bottom-utilities">
-        <Button
-          text="text"
-          onClick={() =>
-            openModal({
-              title: "Test Modal",
-              message: "I'm testing message",
-            })
-          }
-        />
         <ul>
           {botUtilities.map((item) => (
             <li key={`${item.name}-${item.route}`}>
