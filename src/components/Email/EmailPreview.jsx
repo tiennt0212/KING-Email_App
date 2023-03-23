@@ -74,10 +74,11 @@ const EmailPreview = ({
   hasBookmark,
   className,
   senderInfo,
+  onSelectEmail,
   ...rest
 }) => {
   return (
-    <EmailPreviewStyled className={className}>
+    <EmailPreviewStyled className={className} onClick={() => onSelectEmail()}>
       <div className="email-header">
         <UserInfo {...senderInfo} />
         <Button
