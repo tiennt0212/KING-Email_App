@@ -9,7 +9,7 @@ import { ROUTES } from "utils/constants";
 import StampService from "services/StampService";
 // import { RegisterSBT } from "components";
 // import { delay } from "utils/functions";
-import { IconConverter } from "services/IconService";
+import { IconConverter, IconValidator } from "services/IconService";
 import { delay } from "utils/functions";
 import { Button } from "components";
 const initialState = {
@@ -17,6 +17,7 @@ const initialState = {
   personal: {
     collected: [], // stamps were bought recently
     received: [], // stamps were received along to email
+    selected: {}, // selected stamp
   },
   sent: [], // stamps were used to send email
 };
@@ -46,6 +47,15 @@ const StampStore = {
         personal: {
           ...state.personal,
           received: payload,
+        },
+      };
+    },
+    setSelectedStamp(state, payload) {
+      return {
+        ...state,
+        personal: {
+          ...state.personal,
+          selected: payload,
         },
       };
     },
@@ -105,9 +115,96 @@ const StampStore = {
           expired: IconConverter.toHex(1),
           address: localStorage.getItem("address"),
         });
-        console.log(res);
-        console.log(JSON.parse(res));
-        this.setPersonalReceived(JSON.parse(res));
+        console.log("res", res);
+        const handleStampData = async (stamps) => {
+          let a = stamps;
+          // Remove the last comma
+          if (stamps[stamps.length - 2] === ",") {
+            console.log("RIGHT");
+            a = stamps.replace(/},]/i, "}]");
+          }
+          console.log("removed comma", a);
+
+          // Replace new lines by \\n
+          a = a.replace(/\\n/g, "\\n");
+          a = a.replace(/""/g, '"');
+          console.log("replace new line", a);
+
+          // Parse from String to Array of Objects
+          const parsed = JSON.parse(a);
+          console.log("parsed", parsed);
+
+          // Convert null, boolean values
+          const converted = parsed.map((stamp) => {
+            for (const key in stamp) {
+              if (stamp[key] === "null") stamp[key] = null;
+              if (stamp[key] === "false") stamp[key] = false;
+              if (stamp[key] === "true") stamp[key] = true;
+            }
+            return stamp;
+          });
+          const setOfSender = new Set(converted.map((stamp) => stamp?.sender));
+          for (const senderAddress of setOfSender.values()) {
+            console.log(senderAddress);
+            const senderInfo = await dispatch.UserStore.getUser(senderAddress);
+            converted.forEach((element) => {
+              if ((element.sender = senderAddress)) {
+                element.senderInfo = senderInfo;
+                console.log("Updated element: ", element);
+              }
+            });
+          }
+          return converted;
+        };
+        const handledData = await handleStampData(res);
+        this.setPersonalReceived(handledData);
+      } catch (error) {
+        console.log(error);
+        dispatch.AppStore.openModal({
+          title: "Something went wrong~~",
+          message: error.message,
+          closeable: true,
+        });
+      }
+    },
+    async getSentEmail() {
+      try {
+        const res = await StampService.getUserSentEmail({
+          address: localStorage.getItem("address"),
+          expired: IconConverter.toHex(1),
+        });
+        console.log("res", res);
+        const handleStampData = (stamps) => {
+          let a = stamps;
+          // Remove the last comma
+          if (stamps[stamps.length - 2] === ",") {
+            console.log("RIGHT");
+            a = stamps.replace(/},]/i, "}]");
+          }
+          console.log("removed comma", a);
+
+          // Replace new lines by \\n
+          a = a.replace(/\\n/g, "\\\\n");
+          a = a.replace(/""/g, '"');
+          console.log("replace new line", a);
+
+          // Parse from String to Array of Objects
+          const parsed = JSON.parse(a);
+          console.log("parsed", parsed);
+
+          // Convert null, boolean values
+          const converted = parsed.map((stamp) => {
+            for (const key in stamp) {
+              if (stamp[key] === "null") stamp[key] = null;
+              if (stamp[key] === "false") stamp[key] = false;
+              if (stamp[key] === "true") stamp[key] = true;
+            }
+            return stamp;
+          });
+          return converted;
+        };
+        const handledData = handleStampData(res);
+        this.setPersonalReceived(handledData);
       } catch (error) {
         console.log(error);
         dispatch.AppStore.openModal({
@@ -210,6 +307,49 @@ const StampStore = {
             ),
           });
         }
+      } catch (error) {
+        console.log(error);
+        dispatch.AppStore.openModal({
+          title: "Something went wrong~~",
+          message: error.message,
+          closeable: true,
+        });
+      }
+    },
+    async getStampById({ stampId }) {
+      try {
+        const res = await StampService.getStamp({ stampId: stampId });
+        this.setSelectedStamp(JSON.parse(res));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async sendMail({ stampId, receiver, title, content }) {
+      try {
+        if (!IconValidator.isAddress(receiver))
+          throw Error("Receiver input is not valid");
+        const resSend = await StampService.sendMail({
+          stampId,
+          receiver,
+          title,
+          content: JSON.stringify(content),
+        });
+        // this.setSelectedStamp(JSON.parse(res));
+        // console.log(resSend);
+        // console.log(JSON.parse(resSend));
+        const txURL = `https://lisbon.tracker.solidwallet.io/transaction/${resSend?.result}`;
+        dispatch.AppStore.openModal({
+          title: "Successfully!",
+          message: `You have sent a letter successfully to \n ${receiver}`,
+          closeable: true,
+          children: (
+            <a href={txURL} target="_blank" style={{ fontSize: "1.6rem" }}>
+              Transaction
+            </a>
+          ),
+        });
+        localStorage.removeItem("selected");
+        this.setSelectedStamp({});
       } catch (error) {
         console.log(error);
         dispatch.AppStore.openModal({

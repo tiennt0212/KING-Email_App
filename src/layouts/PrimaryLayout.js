@@ -11,7 +11,7 @@ import { PAPER_THEME, WATER_THEME } from "styles/theme";
 import icPlane from "assets/images/ic-plane.png";
 import icPaper from "assets/images/ic-paper.png";
 import icGear from "assets/images/ic-gear.png";
-// import icQuestion from "assets/images/ic-question.png";
+import icMailbox from "assets/images/ic-mailbox.png";
 
 const PrimaryLayoutStyled = styled.div`
   height: 100%;
@@ -85,7 +85,8 @@ const PrimaryLayout = ({ children, sidebar, ...rest }) => {
   //
 
   const manageEmailItems = [
-    { icon: icPlane, route: ROUTES.MAILS, name: "All mail" },
+    { icon: icMailbox, route: ROUTES.MAILS, name: "Received Mails" },
+    { icon: icPlane, route: ROUTES.SENT_MAILS, name: "Sent Mails" },
     { icon: icPaper, route: ROUTES.EMAIL_COMPOSE, name: "New Compose" },
   ];
 

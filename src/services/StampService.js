@@ -52,12 +52,15 @@ class StampService {
       },
     });
   }
-  async getUserSentEmail() {
+  async getUserSentEmail({ address, expired }) {
     return await read({
       from: localStorage.getItem("address"),
       methodName: "getSentEmail",
       scoreAddress: this.contractAddress,
-      params: {},
+      params: {
+        _address: address,
+        _expired: expired,
+      },
     });
   }
   // Debug

@@ -7,19 +7,20 @@ const EmailPreviewPanelStyled = styled.div`
   max-width: 57rem;
   overflow-y: auto;
 `;
-
-const EmailPreviewPanel = ({ emailList, onSelectEmail, ...props }) => {
+const EmailPreviewPanel = ({ emailList, onSelectEmail, loading, ...props }) => {
+  console.log("received emailList: ", emailList);
   return (
     <EmailPreviewPanelStyled>
-      {emailList.map(
-        ({ senderAvt, senderName, cardTitle, time, cardContent }) => (
+      {emailList?.map(
+        ({ senderAvt, sender, title, time, content, id, senderInfo }) => (
           <EmailPreview
-            key={`${senderName}-${time}`}
-            senderAvt={senderAvt}
-            senderName={senderName}
-            cardTitle={cardTitle}
-            time={time}
-            cardContent={cardContent}
+            key={`${sender}-${id}`}
+            // senderAvt={senderAvt}
+            // senderName={sender}
+            senderInfo={senderInfo}
+            cardTitle={title}
+            // time={time}
+            cardContent={content}
           />
         )
       )}

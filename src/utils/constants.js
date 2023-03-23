@@ -1,7 +1,8 @@
 export const ROUTES = {
   HOME: "/",
   MAILS: "/mails",
-  EMAIL_COMPOSE: "/mails/compose/:stampId",
+  SENT_MAILS: "/sent-mails",
+  EMAIL_COMPOSE: "/mails/compose",
   BOOKMARKS: "/bookmarks",
   WORLD_OF_STAMPS: "/world-of-stamps",
   WORLD_OF_STAMPS_DISCOVER: "/world-of-stamps/discover",
@@ -30,5 +31,6 @@ export const STEP = {
 
 export const SCORE = {
   SBT_USER: "cx57c71d9ff3c1dcacbf10758f021ee2c61190ef9b",
-  STAMP: "cx899530f7541189e2b739f1393d34590556d4078e",
+  // STAMP: "cx899530f7541189e2b739f1393d34590556d4078e",
+  STAMP: "cxe2694d7d71d0cc476fac78430eb47e210ff4d1e6",
 };
