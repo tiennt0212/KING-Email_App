@@ -18,8 +18,8 @@ const initialState = {
     collected: [], // stamps were bought recently
     received: [], // stamps were received along to email
     selected: {}, // selected stamp
+    sent: [], // stamps were used to send email
   },
-  sent: [], // stamps were used to send email
 };
 
 const StampStore = {
@@ -59,10 +59,14 @@ const StampStore = {
         },
       };
     },
-    setSent(state, payload) {
+    setSentMail(state, payload) {
       return {
         ...state,
-        sent: payload,
+
+        personal: {
+          ...state.personal,
+          sent: payload,
+        },
       };
     },
   },
@@ -92,7 +96,7 @@ const StampStore = {
               creatorAddress
             );
             converted.forEach((element) => {
-              if ((element.creator = creatorAddress))
+              if ((element.creator === creatorAddress))
                 element.creatorInfo = creatorInfo;
             });
           }
@@ -148,7 +152,7 @@ const StampStore = {
             console.log(senderAddress);
             const senderInfo = await dispatch.UserStore.getUser(senderAddress);
             converted.forEach((element) => {
-              if ((element.sender = senderAddress)) {
+              if ((element.sender === senderAddress)) {
                 element.senderInfo = senderInfo;
                 console.log("Updated element: ", element);
               }
@@ -171,10 +175,10 @@ const StampStore = {
       try {
         const res = await StampService.getUserSentEmail({
           address: localStorage.getItem("address"),
-          expired: IconConverter.toHex(1),
+          // expired: IconConverter.toHex(1),
         });
         console.log("res", res);
-        const handleStampData = (stamps) => {
+        const handleStampData = async (stamps) => {
           let a = stamps;
           // Remove the last comma
           if (stamps[stamps.length - 2] === ",") {
@@ -184,7 +188,7 @@ const StampStore = {
           console.log("removed comma", a);
 
           // Replace new lines by \\n
-          a = a.replace(/\\n/g, "\\\\n");
+          a = a.replace(/\n/g, "\\n");
           a = a.replace(/""/g, '"');
           console.log("replace new line", a);
 
@@ -201,17 +205,31 @@ const StampStore = {
             }
             return stamp;
           });
+          const setOfReceiver = new Set(
+            converted.map((stamp) => stamp?.receiver)
+          );
+          for (const receiverAddress of setOfReceiver.values()) {
+            const receiverInfo = await dispatch.UserStore.getUser(
+              receiverAddress
+            );
+            converted.forEach((element) => {
+              if ((element.receiver === receiverAddress)) {
+                element.receiverInfo = receiverInfo;
+                console.log("Updated element: ", element);
+              }
+            });
+          }
           return converted;
         };
-        const handledData = handleStampData(res);
-        this.setPersonalReceived(handledData);
+        const handledData = await handleStampData(res);
+        this.setSentMail(handledData);
       } catch (error) {
         console.log(error);
-        dispatch.AppStore.openModal({
-          title: "Something went wrong~~",
-          message: error.message,
-          closeable: true,
-        });
+        // dispatch.AppStore.openModal({
+        //   title: "Something went wrong~~",
+        //   message: error.message,
+        //   closeable: true,
+        // });
       }
     },
     async buyStamp({ stampId }, rootState) {

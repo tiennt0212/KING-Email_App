@@ -10,9 +10,10 @@ import {
 import EmailPreviewPanel from "./EmailPreviewPanel";
 import { useDispatch, useSelector, useStore } from "hooks";
 import colors from "styles/colors";
-import { BREAKPOINTS } from "utils/constants";
+import { BREAKPOINTS, ROUTES } from "utils/constants";
 import mail from "assets/images/mail.png";
 import { handleEvent, getWallet } from "services/IconService";
+import { useLocation } from "react-router-dom";
 const EmailLayout = styled.div`
   display: flex;
   > .left-side {
@@ -27,9 +28,12 @@ const EmailLayout = styled.div`
 `;
 
 const Bemails = () => {
-  const { receivedEmail, loadingGetReceivedEmail } = useSelector(
+  const location = useLocation();
+  const isReceivedEmailPage = location.pathname === ROUTES.MAILS;
+  const { receivedEmail, sentEmail, loadingGetReceivedEmail } = useSelector(
     ({ StampStore, loading }) => ({
       receivedEmail: StampStore.personal.received,
+      sentEmail: StampStore.personal.sent,
       loadingGetReceivedEmail: loading.effects.StampStore.getReceivedEmail,
     })
   );
@@ -51,9 +55,11 @@ const Bemails = () => {
   }));
 
   useEffect(() => {
-    if (isLoggedIn) getReceivedEmail();
-    // getSentEmail();
-  }, [getReceivedEmail]);
+    if (isLoggedIn) {
+      if (isReceivedEmailPage) getReceivedEmail();
+      else getSentEmail();
+    }
+  }, [getReceivedEmail, location]);
   // const exampleEmailList = [
   //   {
   //     senderAvt:
@@ -88,7 +94,7 @@ const Bemails = () => {
       <EmailLayout>
         <div className="left-side">
           <EmailPreviewPanel
-            emailList={receivedEmail}
+            emailList={isReceivedEmailPage ? receivedEmail : sentEmail}
             loading={loadingGetReceivedEmail}
           />
           {/* <EmailPreviewPanel emailList={exampleEmailList} /> */}

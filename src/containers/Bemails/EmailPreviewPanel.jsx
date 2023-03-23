@@ -12,12 +12,21 @@ const EmailPreviewPanel = ({ emailList, onSelectEmail, loading, ...props }) => {
   return (
     <EmailPreviewPanelStyled>
       {emailList?.map(
-        ({ senderAvt, sender, title, time, content, id, senderInfo }) => (
+        ({
+          senderAvt,
+          sender,
+          title,
+          time,
+          content,
+          id,
+          senderInfo,
+          receiverInfo,
+        }) => (
           <EmailPreview
             key={`${sender}-${id}`}
             // senderAvt={senderAvt}
             // senderName={sender}
-            senderInfo={senderInfo}
+            senderInfo={senderInfo || receiverInfo}
             cardTitle={title}
             // time={time}
             cardContent={content}
