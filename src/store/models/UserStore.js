@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   dispatchEvent,
   read,
@@ -12,10 +13,11 @@ import { delay } from "utils/functions";
 const initialState = {
   wallet: { address: localStorage.getItem("address") },
   info: null,
+  memoUserInfo: {},
 };
 
 const UserStore = {
-  name: "User",
+  name: "UserStore",
   state: initialState,
   reducers: {
     setWallet(state, payload) {
@@ -28,6 +30,16 @@ const UserStore = {
       return {
         ...state,
         ...payload,
+      };
+    },
+    pushMemoUserInfo(state, payload) {
+      const { address } = payload;
+      return {
+        ...state,
+        memoUserInfo: {
+          ...state.memoUserInfo,
+          [address]: payload,
+        },
       };
     },
   },
@@ -46,11 +58,25 @@ const UserStore = {
         once: true,
       });
     },
-    async authenticate(payload) {
-      const { address } = payload;
-      try {
+    async getUser(address, rootState) {
+      if (rootState.UserStore.memoUserInfo.hasOwnProperty(address)) {
+        console.log("Address ", address, "is exists");
+        return rootState.UserStore.memoUserInfo[address];
+      } else {
+        console.log("Address ", address, "is NON exists");
+
         const res = await SbtUserService.getUser({ address: address });
-        this.setInfo(JSON.parse(res));
+        const resJson = JSON.parse(res);
+        this.pushMemoUserInfo(resJson);
+        return resJson;
+      }
+    },
+    async authenticate() {
+      console.log("Call authenticate func");
+      const address = localStorage.getItem("address");
+      try {
+        const res = await this.getUser(address);
+        this.setInfo(res);
       } catch (error) {
         if (error.includes("E0032:Reverted(0)")) {
           console.log("open Modal form");
@@ -74,17 +100,6 @@ const UserStore = {
           throw new Error(resRegister?.error?.message);
         }
         this.setInfo({ name: _name });
-        // const txResult = await waitTransactionResult(resRegister?.result);
-        // console.log("waitTransactionResult", txResult);
-        //
-        // await delay(3000);
-        // await SbtUserService.getUser({
-        //   address: localStorage.getItem("address"),
-        // });
-        //
-        // WONDER: I don't know how to wait TX successfully.
-        //
-        // So I cheat code.
         dispatch.AppStore.openModal({
           title: "You have registered successfully!",
           message: `Your nickname now is ${_name}`,
@@ -125,13 +140,16 @@ const UserStore = {
   }),
   selectors: (slice, createSelector, hasProps) => ({
     isLoggedIn() {
-      return createSelector(this.selectUser, (User) => !!User?.wallet?.address);
+      return createSelector(
+        this.selectUser,
+        (UserStore) => !!UserStore?.wallet?.address
+      );
     },
     selectUser() {
       return slice((state) => state);
     },
     getAddress() {
-      return createSelector(this.selectUser, (User) => User.address);
+      return createSelector(this.selectUser, (UserStore) => UserStore.address);
     },
   }),
 };

@@ -5,37 +5,36 @@
 import IconService from "icon-sdk-js";
 import { LISBON, STEP } from "utils/constants";
 
-const { HttpProvider, IconConverter, SignedTransaction, IconWallet } =
-  IconService;
+const { HttpProvider, IconConverter } = IconService;
 const { CallBuilder, CallTransactionBuilder } = IconService.IconBuilder;
 
 const httpProvider = new HttpProvider(LISBON.RPC);
 const iconService = new IconService(httpProvider);
 
-const getTotalSupply = async () => {
-  return await iconService.getTotalSupply().execute();
-};
+// const getTotalSupply = async () => {
+//   return await iconService.getTotalSupply().execute();
+// };
 
-const getBalance = async (address) => {
-  return await iconService.getBalance(address).execute();
-};
+// const getBalance = async (address) => {
+//   return await iconService.getBalance(address).execute();
+// };
 
-const getLastBlock = async () => {
-  return await iconService.getLastBlock().execute();
-};
+// const getLastBlock = async () => {
+//   return await iconService.getLastBlock().execute();
+// };
 
-const getScoreApi = async (scoreAddress) => {
-  const apiList = await iconService.getScoreApi(scoreAddress).execute();
-  return apiList;
-};
+// const getScoreApi = async (scoreAddress) => {
+//   const apiList = await iconService.getScoreApi(scoreAddress).execute();
+//   return apiList;
+// };
 
-const getTransactionResult = async (txHash) => {
-  return await iconService.getTransactionResult(txHash).execute();
-};
+// const getTransactionResult = async (txHash) => {
+//   return await iconService.getTransactionResult(txHash).execute();
+// };
 
-const traceTransaction = async (txHash) => {
-  return await iconService.getTrace(txHash).execute();
-};
+// const traceTransaction = async (txHash) => {
+//   return await iconService.getTrace(txHash).execute();
+// };
 
 const dispatchEvent = (type, payload) => {
   console.log("type", type);
@@ -137,6 +136,7 @@ const read = async ({ from, scoreAddress, methodName, params }) => {
   return await iconService.call(tx).execute();
 };
 export {
+  IconConverter,
   dispatchEvent,
   handleEvent,
   getWallet,

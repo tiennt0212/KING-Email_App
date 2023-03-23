@@ -18,7 +18,7 @@ export const BREAKPOINTS = {
 export const LISBON = {
   RPC: "https://lisbon.net.solidwallet.io/api/v3",
   NID: 2,
-  VER: 3
+  VER: 3,
 };
 export const STEP = {
   MIN: 3178800, // about 3.2 million
@@ -28,4 +28,5 @@ export const STEP = {
 
 export const SCORE = {
   SBT_USER: "cx57c71d9ff3c1dcacbf10758f021ee2c61190ef9b",
+  STAMP: "cx899530f7541189e2b739f1393d34590556d4078e",
 };

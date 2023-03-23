@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import { Avatar, Button, AddressShorten } from "components";
-import { useDispatch, useSelect } from "hooks";
-import { handleEvent } from "services/IconService";
+import { Avatar, Button, AddressShorten, UserInfo } from "components";
 import { BREAKPOINTS, ROUTES } from "utils/constants";
 
 // import gifInk1 from "assets/images/ink1.gif";
@@ -12,18 +10,20 @@ import { BREAKPOINTS, ROUTES } from "utils/constants";
 // import gifInkPlanet from "assets/images/ink-planet.gif";
 // import gifInkDiscover from "assets/images/ink-discover.gif";
 // import letter1 from "assets/images/letter1.gif";
-import colors from "styles/colors";
 import icWallet from "assets/images/ic-wallet.png";
 import icLogout from "assets/images/ic-logout.png";
+import { WATER_THEME, PAPER_THEME } from "styles/theme";
 
-const { tealGreen, lightGray } = colors;
 const HeaderStyled = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 3.2rem;
-  border-bottom: solid 0.2rem ${lightGray};
+  background-color: inherit;
   height: 9rem;
+  padding: 0 3.2rem;
+  border-bottom: solid 0.2rem;
+  border-color: ${({ theme }) =>
+    theme.name === PAPER_THEME.name ? theme.subColor2 : "transparent"};
   box-sizing: border-box;
 `;
 
@@ -31,14 +31,14 @@ const LogoAndSloganStyled = styled.div`
   display: flex;
   align-items: center;
   h2 {
-    background-color: ${tealGreen};
-    color: white;
+    background-color: ${(props) => props.theme.primaryColor};
+    color: white; // Fixed color on both theme
     padding: 0.4rem 1rem 0rem;
     border-radius: 0.8rem;
     font-size: 4.8rem;
   }
   .slogan {
-    color: ${tealGreen};
+    color: ${(props) => props.theme.subColor};
     font-size: 1.6rem;
     line-height: 1.8rem;
     margin-left: 1.8rem;
@@ -64,7 +64,7 @@ const NavStyled = styled.nav`
       margin-right: 2rem;
       a {
         text-decoration: none;
-        color: ${colors.black};
+        color: inherit;
         display: block;
         .nav-item {
           display: flex;
@@ -79,7 +79,7 @@ const NavStyled = styled.nav`
           }
         }
         &.active {
-          color: ${tealGreen};
+          color: ${(props) => props.theme.primaryColor};
           font-weight: bold;
         }
       }
@@ -115,14 +115,15 @@ const UserUtilitiesStyled = styled.div`
     display: flex;
     align-items: center;
     p {
+      color: inherit;
       margin-right: 1.2rem;
-      // CSS for user name
       font-size: 1.6rem;
       font-weight: bold;
     }
-    .user-avatar {
-      box-shadow: rgba(0, 0, 0, 0.35) 0px 4px 8px;
-      margin-right: 1.2rem;
+    .btn-logout {
+      filter: invert(
+        ${(props) => (props.theme.name === WATER_THEME.name ? 1 : 0)}
+      );
     }
   }
 `;
@@ -134,8 +135,10 @@ const Header = ({
   userNickname,
   onConnectWallet,
   logoutHandler,
+  user,
   ...rest
 }) => {
+  console.log(user);
   return (
     <HeaderStyled>
       <div className="left-side">
@@ -171,16 +174,19 @@ const Header = ({
         <UserUtilitiesStyled>
           {isLoggedIn ? (
             <div className="logged_in-user">
-              {userNickname ? (
+              {/* {userNickname ? (
                 <p>{userNickname}</p>
               ) : (
                 <AddressShorten address={userAddr} />
-              )}
-              <Avatar src={userAvt} size="large" className="user-avatar" />
+              )} */}
+
+              {/* <Avatar src={userAvt} size="large" className="user-avatar" /> */}
+              <UserInfo {...user} />
               <Button
                 icon={icLogout}
                 type={"link"}
                 size="large"
+                className="btn-logout"
                 onClick={() => logoutHandler()}
               />
             </div>
