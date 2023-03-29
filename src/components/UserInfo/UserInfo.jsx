@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import Avatar from "components/Avatar";
 const WrapperStyled = styled.div`
@@ -25,8 +25,8 @@ const WrapperStyled = styled.div`
   }
 `;
 
-const UserInfo = (props) => {
-  const { address, name, avatar, id, avtSize, ...rest } = props;
+const UserInfo = memo(({ address, name, avatar, id, avtSize, ...rest }) => {
+  console.count("render UserInfo");
   return (
     <WrapperStyled {...rest}>
       <div className="left-side">
@@ -40,6 +40,6 @@ const UserInfo = (props) => {
       </div>
     </WrapperStyled>
   );
-};
+});
 
 export default UserInfo;
