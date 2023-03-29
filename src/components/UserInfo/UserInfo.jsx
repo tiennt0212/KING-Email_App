@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import Avatar from "components/Avatar";
 const WrapperStyled = styled.div`
@@ -25,21 +25,29 @@ const WrapperStyled = styled.div`
   }
 `;
 
-const UserInfo = (props) => {
-  const { address, name, avatar, id, avtSize, ...rest } = props;
-  return (
-    <WrapperStyled {...rest}>
-      <div className="left-side">
-        <Avatar src={avatar} className="user-avatar" size={avtSize} />
-      </div>
-      <div className="right-side">
-        <p className="user-name">{name}</p>
-        <p className="user-address">
-          {`${address?.substr(0, 4)}...${address?.substr(-4, address.length)}`}
-        </p>
-      </div>
-    </WrapperStyled>
-  );
-};
+const UserInfo = memo(
+  (props) => {
+    const { address, name, avatar, id, avtSize, ...rest } = props;
+    console.log("render");
+    return (
+      <WrapperStyled {...rest}>
+        <div className="left-side">
+          <Avatar src={avatar} className="user-avatar" size={avtSize} />
+        </div>
+        <div className="right-side">
+          <p className="user-name">{name}</p>
+          {console.count("render")}
+          <p className="user-address">
+            {`${address?.substr(0, 4)}...${address?.substr(
+              -4,
+              address.length
+            )}`}
+          </p>
+        </div>
+      </WrapperStyled>
+    );
+  },
+  (prevProps, nextProps) => prevProps.name === nextProps.name
+);
 
 export default UserInfo;
