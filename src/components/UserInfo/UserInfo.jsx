@@ -25,29 +25,21 @@ const WrapperStyled = styled.div`
   }
 `;
 
-const UserInfo = memo(
-  (props) => {
-    const { address, name, avatar, id, avtSize, ...rest } = props;
-    console.log("render");
-    return (
-      <WrapperStyled {...rest}>
-        <div className="left-side">
-          <Avatar src={avatar} className="user-avatar" size={avtSize} />
-        </div>
-        <div className="right-side">
-          <p className="user-name">{name}</p>
-          {console.count("render")}
-          <p className="user-address">
-            {`${address?.substr(0, 4)}...${address?.substr(
-              -4,
-              address.length
-            )}`}
-          </p>
-        </div>
-      </WrapperStyled>
-    );
-  },
-  (prevProps, nextProps) => prevProps.name === nextProps.name
-);
+const UserInfo = memo(({ address, name, avatar, id, avtSize, ...rest }) => {
+  console.count("render UserInfo");
+  return (
+    <WrapperStyled {...rest}>
+      <div className="left-side">
+        <Avatar src={avatar} className="user-avatar" size={avtSize} />
+      </div>
+      <div className="right-side">
+        <p className="user-name">{name}</p>
+        <p className="user-address">
+          {`${address?.substr(0, 4)}...${address?.substr(-4, address.length)}`}
+        </p>
+      </div>
+    </WrapperStyled>
+  );
+});
 
 export default UserInfo;
